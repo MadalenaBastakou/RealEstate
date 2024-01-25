@@ -9,70 +9,55 @@ const AddResidence = () => {
     name: "",
     description: "",
     price: "",
-    image: "",
   });
+
+  const [fileData, setFileData] = useState();
+
 
   const navigate = useNavigate();
 
-  // const handleSubmit = (e) => {
-  //   e.preventDefault();
-  //   axios
-  //     .post("http://localhost:3001/residence/add", {
-  //       name: name,
-  //       price: price,
-  //       description: description,
-  //       imageUrl: imageUrl,
-  //     })
-  //     .then((data) => {
-  //       console.log(data);
-  //       navigate("/Residences");
-  //     })
-  //     // .then((res) => {
-  //     //   if (res.data.added) {
-  //     //     navigate("/Residences");
-  //     //   } else {
-  //     //     console.log(res);
-  //     //   }
-  //     // })
-  //     .catch((err) => console.log(err));
-  // };
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    try{
 
-  // const handleSubmit = async (e) => {
-  //   e.preventDefault();
-  //   const formData = new FormData();
-  //   formData.append("image", residence.image);
-  //   formData.append("name", residence.name);
-  //   formData.append("price", residence.price);
-  //   formData.append("description", residence.description);
-
-  //   console.log(residence.image);
-
-  //   const res = await axios.post("http://localhost:3001/upload", formData);
-  //   setImageUrl(`http://localhost:3001/public/images/${res.data.filename}`);
-  //   console.log(res);
-  // };
-
-  const handleSubmit = async(e) => {
-e.preventDefault()
-const {name, description, price} = e.target
-const res = await axios.post("http://localhost:3001/residences/add", residence, {withCredentials:true})
-console.log(res);
-  }
+      const formData = new FormData();
+      formData.append("image", fileData);
+      formData.append("name", residence.name);
+      formData.append("price", residence.price);
+      formData.append("description", residence.description);
+      const res = await axios.post("http://localhost:3001/residences/add", formData, {withCredentials:true});
+      console.log(res);
+    } catch(err) {
+      console.log(err);
+    }
+  };
 
   const handleChange = (e) => {
     const { name, value } = e.target;
     setResidence({ ...residence, [name]: value });
   };
 
-  // const handleImage = (e) => {
-  //   console.log(e.target.files);
-  //   setResidence({ ...residence, image: e.target.files[0] });
-  //   console.log(residence.image);
-  // };
+  const handleImage = (e) => {
+    setFileData(e.target.files[0] );
+  };
+
+
+  const handleUpload = async (e) => {
+    e.preventDefault();
+
+    const data = new FormData();
+    data.append("image", fileData);
+
+    const res = await axios.post("http://localhost:3001/single", data, {
+      withCredentials: true,
+    });
+    console.log(res);
+  };
+
 
   return (
     <div className="athlete-form-container">
-      <form className="athlete-form" onSubmit={handleSubmit} >
+      <form className="athlete-form" onSubmit={handleSubmit}>
         <h2>Add Residence</h2>
         <div className="form-group">
           <label htmlFor="residence">Name :</label>
@@ -106,15 +91,15 @@ console.log(res);
         </div>
         <div className="form-group">
           <label htmlFor="image">Image URL :</label>
-          <input type="file" accept="image/*" />
-          <button >Upload</button>
-        </div>
-
         {/* <img
-          src={`http://localhost:3001/images/${imageName}`}
+          src={`http://localhost:3001/public/images/${residence.image}`}
           alt="Residence"
           style={{ maxWidth: "100%" }}
         /> */}
+          <input type="file" name="image" onChange={handleImage} accept="image/*" />
+          <button onClick={handleUpload}>Upload</button>
+        </div>
+
 
         <button type="submit" className="btn-register">
           Add
