@@ -5,26 +5,32 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
 const SignUp = () => {
-  const [username, setUsername] = useState("");
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const [user, setUser] = useState({
+    username: "",
+    email: "",
+    password: "",
+  });
+
   const navigate = useNavigate();
 
-  const handleSubmit = (e) => {
+  const handleInput = (e) => {
+    const { name, value } = e.target;
+    setUser((prevUser) => ({
+      ...prevUser,
+      [name]: value,
+    }));
+  };
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    axios
-      .post("http://localhost:3001/user/register", {
-        username: username,
-        email: email,
-        password: password,
-      })
-      .then(({ data }) => {
-        console.log(data);
-        if (data.msg === "user created successfully") {
-          navigate("/login");
-        }
-      })
-      .catch((err) => console.log(err));
+    const res = await axios.post("http://localhost:3001/register", user, {
+      withCredentials: true,
+    });
+    // console.log(res.data.message);
+    // console.log(res.status);
+    if (res.status === 200) {
+      navigate("/login");
+    }
   };
 
   return (
@@ -37,7 +43,8 @@ const SignUp = () => {
             type="text"
             id="username"
             name="username"
-            onChange={(e) => setUsername(e.target.value)}
+            value={user.username}
+            onChange={handleInput}
           />
         </div>
         <div className="form-group">
@@ -46,7 +53,8 @@ const SignUp = () => {
             type="email"
             id="email"
             name="email"
-            onChange={(e) => setEmail(e.target.value)}
+            value={user.email}
+            onChange={handleInput}
           />
         </div>
         <div className="form-group">
@@ -55,7 +63,8 @@ const SignUp = () => {
             type="password"
             id="password"
             name="password"
-            onChange={(e) => setPassword(e.target.value)}
+            value={user.password}
+            onChange={handleInput}
           />
         </div>
         <button type="submit" className="btn-register">

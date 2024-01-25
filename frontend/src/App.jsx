@@ -1,16 +1,17 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-// import Home from "./components/Home";
+import Home from "./components/Home";
 import Footer from "./components/Footer";
 import Navbar from "./components/Navbar";
 import Residences from "./components/Residences";
 import Login from "./components/Login";
 import SignUp from "./components/SignUp";
 import "./App.css";
-// import Logout from "./components/Logout";
+import Logout from "./components/Logout";
 // import axios from "axios";
 // import EditResidence from "./components/EditResidence";
 // import DeleteResidence from "./components/DeleteResidence";
 import AddResidence from "./components/AddResidence";
+import RequireAuth from "./components/RequireAuth";
 
 function App() {
   // axios.defaults.withCredentials = true;
@@ -42,14 +43,17 @@ function App() {
   //     <Footer />
   //   </BrowserRouter>
   // );
+  
   return (
     <BrowserRouter>
     <Navbar/>
     <Routes>
-      <Route path="/register" element={<SignUp/>}></Route>
-      <Route path="/login" element={<Login/>}></Route>
-      <Route path="/addresidence" element={<AddResidence />}></Route>
-      <Route path="/residences" element={<Residences />}></Route>
+      <Route path="/register" element={<SignUp/>}/>
+      <Route path="/login" element={<Login/>}/>
+      <Route path="/" element={<RequireAuth><Home /></RequireAuth>}/>
+      <Route path="/addresidence" element={<RequireAuth><AddResidence /></RequireAuth>}/>
+      <Route path="/residences" element={<RequireAuth><Residences /></RequireAuth>}/>
+      <Route path="/logout" element={<Logout />}></Route>
     </Routes>
     <Footer/>
     </BrowserRouter>

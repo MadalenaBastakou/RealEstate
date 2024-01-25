@@ -5,10 +5,13 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
 const AddResidence = () => {
-  const [name, setName] = useState("");
-  const [price, setPrice] = useState("");
-  const [description, setDescription] = useState("");
-  const [image, setImage] = useState("");
+  const [residence, setResidence] = useState({
+    name: "",
+    description: "",
+    price: "",
+    image: "",
+  });
+
   const navigate = useNavigate();
 
   // const handleSubmit = (e) => {
@@ -34,14 +37,42 @@ const AddResidence = () => {
   //     .catch((err) => console.log(err));
   // };
 
-const handleUpload = (e) => {
-  e.preventDefault()
-  console.log(image);
-}
+  // const handleSubmit = async (e) => {
+  //   e.preventDefault();
+  //   const formData = new FormData();
+  //   formData.append("image", residence.image);
+  //   formData.append("name", residence.name);
+  //   formData.append("price", residence.price);
+  //   formData.append("description", residence.description);
+
+  //   console.log(residence.image);
+
+  //   const res = await axios.post("http://localhost:3001/upload", formData);
+  //   setImageUrl(`http://localhost:3001/public/images/${res.data.filename}`);
+  //   console.log(res);
+  // };
+
+  const handleSubmit = async(e) => {
+e.preventDefault()
+const {name, description, price} = e.target
+const res = await axios.post("http://localhost:3001/residences/add", residence, {withCredentials:true})
+console.log(res);
+  }
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setResidence({ ...residence, [name]: value });
+  };
+
+  // const handleImage = (e) => {
+  //   console.log(e.target.files);
+  //   setResidence({ ...residence, image: e.target.files[0] });
+  //   console.log(residence.image);
+  // };
 
   return (
     <div className="athlete-form-container">
-      <form className="athlete-form" >
+      <form className="athlete-form" onSubmit={handleSubmit} >
         <h2>Add Residence</h2>
         <div className="form-group">
           <label htmlFor="residence">Name :</label>
@@ -49,7 +80,8 @@ const handleUpload = (e) => {
             type="text"
             id="name"
             name="name"
-            onChange={(e) => setName(e.target.value)}
+            value={residence.name}
+            onChange={handleChange}
           />
         </div>
         <div className="form-group">
@@ -58,7 +90,8 @@ const handleUpload = (e) => {
             type="text"
             id="price"
             name="price"
-            onChange={(e) => setPrice(e.target.value)}
+            value={residence.price}
+            onChange={handleChange}
           />
         </div>
         <div className="form-group">
@@ -67,20 +100,22 @@ const handleUpload = (e) => {
             type="text"
             id="description"
             name="description"
-            onChange={(e) => setDescription(e.target.value)}
+            value={residence.description}
+            onChange={handleChange}
           />
         </div>
         <div className="form-group">
           <label htmlFor="image">Image URL :</label>
-          <input type="file" onChange={e => setImage(e.target.files[0])}/>
-          <button onClick={handleUpload}>Upload</button>
-          {/* <input
-            type="text"
-            id="image"
-            name="image"
-            onChange={(e) => setImageUrl(e.target.value)}
-          /> */}
+          <input type="file" accept="image/*" />
+          <button >Upload</button>
         </div>
+
+        {/* <img
+          src={`http://localhost:3001/images/${imageName}`}
+          alt="Residence"
+          style={{ maxWidth: "100%" }}
+        /> */}
+
         <button type="submit" className="btn-register">
           Add
         </button>
