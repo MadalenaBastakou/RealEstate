@@ -2,24 +2,31 @@ import axios from "axios";
 import React, { useEffect, useState } from "react";
 import ResidenceCard from "./ResidenceCard";
 import "../css/Residences.css";
+// import { useNavigate } from "react-router-dom";
 
 const Residences = () => {
   const [residences, setResidences] = useState([]);
-
+  
   useEffect(() => {
     fetchData()
   }, []);
 
 console.log(residences);
 
+// const navigate = useNavigate();
+
 const fetchData = async () => {
-  const res = await axios.get("http://localhost:3001/residences", {withCredentials:true})
- setResidences(res.data)
+  axios
+  .get("http://localhost:3001/residences", {withCredentials:true})
+  .then(({data}) => {
+    console.log(data)
+  })
+//  setResidences(res.data)
 }
 
   return (
     <div className="exercise-page">
-      <div className="exercise-list">
+      {/* <div className="exercise-list">
         {residences.map((residence) => {
           return (
             <ResidenceCard
@@ -28,7 +35,9 @@ const fetchData = async () => {
             ></ResidenceCard>
           );
         })}
-      </div>
+      </div> */}
+
+      <p>Test</p>
     </div>
   );
 };
