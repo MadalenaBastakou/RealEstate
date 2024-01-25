@@ -7,14 +7,16 @@ const Residences = () => {
   const [residences, setResidences] = useState([]);
 
   useEffect(() => {
-    axios
-      .get("http://localhost:3001/residence/residence")
-      .then((res) => {
-        setResidences(res.data);
-        console.log(res.data);
-      })
-      .catch((err) => console.log(err));
+    fetchData()
   }, []);
+
+console.log(residences);
+
+const fetchData = async () => {
+  const res = await axios.get("http://localhost:3001/residences", {withCredentials:true})
+ setResidences(res.data)
+}
+
   return (
     <div className="exercise-page">
       <div className="exercise-list">
