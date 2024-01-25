@@ -6,27 +6,27 @@ import "../css/Residences.css";
 
 const Residences = () => {
   const [residences, setResidences] = useState([]);
-  
+
   useEffect(() => {
     fetchData()
   }, []);
 
-console.log(residences);
+  console.log(residences);
 
-// const navigate = useNavigate();
+  // const navigate = useNavigate();
 
-const fetchData = async () => {
-  axios
-  .get("http://localhost:3001/residences", {withCredentials:true})
-  .then(({data}) => {
-    console.log(data)
-  })
-//  setResidences(res.data)
-}
+  const fetchData = async () => {
+    axios
+      .get("http://localhost:3001/residences", { withCredentials: true })
+      .then(({ data }) => {
+        // console.log(data);
+        setResidences(data);
+      })
+  }
 
   return (
     <div className="exercise-page">
-      {/* <div className="exercise-list">
+      <div className="exercise-list">
         {residences.map((residence) => {
           return (
             <ResidenceCard
@@ -35,9 +35,7 @@ const fetchData = async () => {
             ></ResidenceCard>
           );
         })}
-      </div> */}
-
-      <p>Test</p>
+      </div>
     </div>
   );
 };
