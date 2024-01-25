@@ -15,7 +15,7 @@ const register = async (req, res) => {
     if (!email || !password || !username) {
       return res.status(400).json({ message: "Please enter all the fields" });
     }
-    return res.status(200).json({ registered: true });
+    return res.status(200).json({ message: "User created successfully" });
   } catch (err) {
     return res.json({ message: "Error in registering user" });
   }
@@ -34,7 +34,7 @@ const login = async (req, res) => {
       return res.json({ message: "Wrong Password" });
     }
     const token = jwt.sign({ username: user.username }, process.env.User_Key);
-    res.cookie("token", token, { httpOnly: true, secure: true });
+    res.cookie("token", token);
     return res.json({ login: true });
   } catch (err) {
     res.json(err);
@@ -51,7 +51,7 @@ const verify = (req, res) => {
 
 const logout = (req, res) => {
   res.clearCookie("token");
-  return res.json({ logout: true });
+  return res.json({ logout: true } );
 };
 
 export default { register, login, verify, logout };

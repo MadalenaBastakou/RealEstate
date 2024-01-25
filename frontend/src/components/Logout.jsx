@@ -4,15 +4,16 @@ import { useNavigate } from "react-router-dom";
 
 const Logout = () => {
   const navigate = useNavigate();
+
   useEffect(() => {
-    axios
-      .get("http://localhost:3001/auth/logout")
-      .then((res) => {
-        if (res.data.logout) {
-          navigate("/");
-        }
-      })
-      .catch((err) => console.log(err));
+    const logout = async() => {
+      const res = await axios.get("http://localhost:3001/logout")
+      console.log(res);
+      // if(res.status === 200) {
+      //   navigate('/login')
+      // }
+    }
+  logout()
   }, []);
 };
 

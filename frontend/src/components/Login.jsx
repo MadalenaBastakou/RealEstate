@@ -4,23 +4,37 @@ import "../css/Login.css";
 import axios from "axios";
 
 const Login = () => {
-  const [username, setUsername] = useState("");
-  const [password, setPassword] = useState("");
+  const [user, setUser] = useState({
+    username: "",
+    password: ""
+  })
+
   const navigate = useNavigate();
 
-  axios.defaults.withCredentials = true;
-  const handleSubmit = () => {
-    axios
-      .post("http://localhost:3001/auth/login", {
-        username: username,
-        password: password,
-      })
-      .then((data) => {
-        console.log(data);
-        navigate("/");
-      })
-      .catch((err) => console.log(err));
+  const handleInput = (e) => {
+    const {name, value} = e.target
+    setUser((prevUser )=> ({...prevUser, [name]: value}))
+  }
+
+  const handleSubmit = async () => {
+    try{
+
+      const res = await axios.post("http://localhost:3001/login", user, {withCredentials:true})
+      console.log(res);
+      if(res.status === 200) {
+       navigate("/");
+      }
+    } catch(err) {
+      console.error("Login failed", err)
+    }
+      // .then((data) => {
+      //   console.log(data);
+      //   navigate("/");
+      // })
+      // .catch((err) => console.log(err));
   };
+
+
 
   return (
     <div className="login-page">
@@ -31,7 +45,9 @@ const Login = () => {
           <input
             type="text"
             placeholder="Enter Username"
-            onChange={(e) => setUsername(e.target.value)}
+            name="username"
+            value={user.username}
+            onChange={handleInput}
           />
         </div>
         <div className="form-group">
@@ -39,7 +55,9 @@ const Login = () => {
           <input
             type="password"
             placeholder="Enter Password"
-            onChange={(e) => setPassword(e.target.value)}
+            name="password"
+            value={user.password}
+            onChange={handleInput}
           />
         </div>
         <button className="btn-login" onClick={handleSubmit}>
