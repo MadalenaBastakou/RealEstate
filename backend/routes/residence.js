@@ -1,7 +1,7 @@
 import express from "express";
 import { Residence } from "../models/Residence.js";
 const router = express.Router();
-import { verifyUser } from "./auth.js";
+import { verifyUser } from "../middleware/verifyUser.js";
 
 router.post("/add", verifyUser, async (req, res) => {
   try {
