@@ -1,35 +1,40 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
-import { Navigate, useSearchParams } from "react-router-dom";
+import { Navigate, useNavigate, useSearchParams } from "react-router-dom";
 
 function RequireAuth(props) {
   const [loggedIn, setLoggedIn] = useState(null);
 
+  const navigate =useNavigate();
 
   const checkAuth = async () => {
-    try {
-      await axios.get("http://localhost:3001/verify", { withCredentials: true });
-      setLoggedIn(true);
-    } catch (err) {
-      setLoggedIn(false);
-    }
-  };
+    axios
+      .get("http://localhost:3001/verify", { withCredentials: true })
+      .then(({data}) => {
+        console.log (data);
+        if (data.message === "User is not valid") {
+          setLoggedIn(false);
+          navigate("/login")
+        } else setLoggedIn(true);
+      })
 
-  useEffect(() => {
-    if (loggedIn === null) {
-      checkAuth();
-    }
-  }, []);
+};
 
+useEffect(() => {
   if (loggedIn === null) {
-    return <div>Loading...</div>;
+    checkAuth();
   }
+}, []);
 
-  if (loggedIn === false) {
-    return <Navigate to="/login" />;
-  }
+if (loggedIn === null) {
+  return <div>Loading...</div>;
+}
 
-  return <div>{props.children}</div>;
+// if (loggedIn === false) {
+//   navigate("/login");
+// }
+
+return <div>{props.children}</div>;
 }
 
 export default RequireAuth;
