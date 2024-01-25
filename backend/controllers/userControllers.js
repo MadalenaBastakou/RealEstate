@@ -23,7 +23,7 @@ const register = async (req, res) => {
 
 const login = async (req, res) => {
   try {
-    const { username, password, email } = req.body;
+    const { username, password } = req.body;
     //   if (role === "user") {
     const user = await User.findOne({ username });
     if (!user) {

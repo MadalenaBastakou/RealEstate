@@ -1,11 +1,13 @@
 import mongoose from "mongoose";
 
 const residenceSchema = new mongoose.Schema({
-  name: { type: String },
+  user:{type: mongoose.Schema.Types.ObjectId, required: true, ref:'User'},
+  name: { type: String, required: true },
   price: { type: String, required: true },
   description: { type: String, required: true },
-  imageUrl: { type: String, required: true },
+  images: [{ type: String, required: true }],
 });
 
-const residenceModel = mongoose.model("Residencie", residenceSchema);
-export { residenceModel as Residence };
+const Residence = mongoose.model("Residence", residenceSchema);
+
+export { Residence };
