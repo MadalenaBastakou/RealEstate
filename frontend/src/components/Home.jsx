@@ -1,22 +1,11 @@
 import axios from "axios";
 import "../css/Home.css";
 import RealEstateImage from "../css/images/pixabay-221457.jpg";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useState } from "react";
 
 const Home = () => {
-  const [category, setCategory] = useState()
-  const [residences, setResidences] = useState([])
-
-console.log(category);
-
-  const handleFetch = async(e) => {
-    setCategory(e.target.value)
-    const res = await axios.get(`http://localhost:3001/residences/${category}`, {withCredentials: true})
-    console.log();
-    // setResidences(res.data)
-  }
-// console.log(residences);
+  const navigate = useNavigate()
 
   return (
     <div className="main-content">
@@ -25,8 +14,8 @@ console.log(category);
         <p>Find your dream home with us. Explore listings, agents, and more.</p>
         {/* <Link to="/residences"> */}
         <div className="home-buttons">
-          <button className="browse-button" name="category" value="forRent" onClick={handleFetch}>For Rent</button>
-          <button className="browse-button" name="category" value="forSale" onClick={handleFetch}>For Sale</button>
+          <button className="browse-button" onClick={() => {navigate("/forRent")}}>For Rent</button>
+          <button className="browse-button" onClick={() => {navigate("/forSale")}}>For Sale</button>
         </div>
         {/* </Link> */}
       </div>

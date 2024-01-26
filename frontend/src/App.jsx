@@ -7,6 +7,8 @@ import Login from "./components/Login";
 import SignUp from "./components/SignUp";
 import "./App.css";
 import Logout from "./components/Logout";
+import ForSale from "./components/ForSale";
+import ForRent from "./components/ForRent";
 // import axios from "axios";
 // import EditResidence from "./components/EditResidence";
 // import DeleteResidence from "./components/DeleteResidence";
@@ -14,35 +16,6 @@ import AddResidence from "./components/AddResidence";
 import RequireAuth from "./components/RequireAuth";
 
 function App() {
-  // axios.defaults.withCredentials = true;
-  // useEffect(() => {
-  //   axios
-  //     .get("http://localhost:3001/auth/verify")
-  //     .then((res) => {
-  //       if (res.data.login) {
-  //         setRole(res.data.role);
-  //       } else {
-  //         setRole("");
-  //       }
-  //     })
-  //     .catch((err) => console.log(err));
-  // }, []);
-  // return (
-  //   <BrowserRouter>
-  //     <Navbar />
-  //     <Routes>
-  //       <Route path="/" element={<Home />}></Route>
-  //       <Route path="/residences" element={<Residences />}></Route>
-  //       <Route path="/login" element={<Login />}></Route>
-  //       <Route path="/signup" element={<SignUp />}></Route>
-  //       <Route path="/logout" element={<Logout />}></Route>
-  //       <Route path="/addresidence" element={<AddResidence />}></Route>
-  //       <Route path="/residence/:id" element={<EditResidence />}></Route>
-  //       <Route path="/residence/:id" element={<DeleteResidence />}></Route>
-  //     </Routes>
-  //     <Footer />
-  //   </BrowserRouter>
-  // );
   
   return (
     <BrowserRouter>
@@ -53,6 +26,8 @@ function App() {
       <Route path="/" element={<RequireAuth><Home /></RequireAuth>}/>
       <Route path="/addresidence" element={<RequireAuth><AddResidence /></RequireAuth>}/>
       <Route path="/residences" element={<RequireAuth><Residences /></RequireAuth>}/>
+      <Route path="/forSale" element={<RequireAuth><ForSale /></RequireAuth>}/>
+      <Route path="/forRent" element={<RequireAuth><ForRent /></RequireAuth>}/>
       <Route path="/logout" element={<Logout />}></Route>
     </Routes>
     <Footer/>

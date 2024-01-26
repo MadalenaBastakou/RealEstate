@@ -3,7 +3,7 @@ import React, { useEffect, useState } from "react";
 import ResidenceCard from "./ResidenceCard";
 import "../css/Residences.css";
 
-const Residences = () => {
+const ForRent = () => {
   const [resForRent, setResForRent] = useState([]);
 
   useEffect(() => {
@@ -11,11 +11,8 @@ const Residences = () => {
   }, []);
 
   const fetchData = async () => {
-    axios
-      .get("http://localhost:3001/residences/forRent", { withCredentials: true })
-      .then(({ data }) => {
-        setResForRent(data);
-      })
+   const res = await axios.get("http://localhost:3001/residences/forRent", { withCredentials: true })
+  setResForRent(res.data);
   }
 
   const deleteResidence = async (id) => {
@@ -42,4 +39,4 @@ const Residences = () => {
   );
 };
 
-export default Residences;
+export default ForRent;
