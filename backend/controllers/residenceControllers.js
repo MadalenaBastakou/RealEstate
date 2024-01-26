@@ -1,19 +1,20 @@
 import { Residence } from "../models/Residence.js";
+import cloudinary from "../utils/cloudinary.js"
 
 const add = async (req, res) => {
+  const { name, price, description, image} = req.body;
   try {
-    console.log(req.file);
-    const { name, price, description } = req.body;
-    if (!req.file) {
-      return res.status(400).json({ message: "No file uploaded" });
-    }
-    const image = req.file.path;
-    console.log(image);
+    const result = await cloudinary.uploader.upload(image,{ folder:"residences", 
+    //width:300, crop: "scale"
+  })
     await Residence.create({
       name,
       price,
       description,
-      image,
+      image: {
+        public_id: result.public_id,
+        url: result.secure_url
+      },
       user: req.user._id,
     });
     return res.status(200).json({ added: true });

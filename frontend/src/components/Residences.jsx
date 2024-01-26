@@ -2,7 +2,6 @@ import axios from "axios";
 import React, { useEffect, useState } from "react";
 import ResidenceCard from "./ResidenceCard";
 import "../css/Residences.css";
-// import { useNavigate } from "react-router-dom";
 
 const Residences = () => {
   const [residences, setResidences] = useState([]);
@@ -11,15 +10,10 @@ const Residences = () => {
     fetchData()
   }, []);
 
-  console.log(residences);
-
-  // const navigate = useNavigate();
-
   const fetchData = async () => {
     axios
       .get("http://localhost:3001/residences", { withCredentials: true })
       .then(({ data }) => {
-        // console.log(data);
         setResidences(data);
       })
   }
@@ -30,7 +24,7 @@ const Residences = () => {
         {residences.map((residence) => {
           return (
             <ResidenceCard
-              key={residence.id}
+              key={residence._id}
               residence={residence}
             ></ResidenceCard>
           );
