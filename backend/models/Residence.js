@@ -5,7 +5,16 @@ const residenceSchema = new mongoose.Schema({
   name: { type: String, required: true },
   price: { type: String, required: true },
   description: { type: String, required: true },
-  images: {data: Buffer, contentType: String }
+  image:{
+    public_id:{
+      type:String,
+      required: true
+    },
+    url:{
+      type:String,
+      required: true
+    }
+  }
 });
 
 const Residence = mongoose.model("Residence", residenceSchema);

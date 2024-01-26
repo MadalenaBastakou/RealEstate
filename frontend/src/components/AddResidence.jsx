@@ -9,70 +9,53 @@ const AddResidence = () => {
     name: "",
     description: "",
     price: "",
-    image: "",
+    image:""
   });
+
+
 
   const navigate = useNavigate();
 
-  // const handleSubmit = (e) => {
-  //   e.preventDefault();
-  //   axios
-  //     .post("http://localhost:3001/residence/add", {
-  //       name: name,
-  //       price: price,
-  //       description: description,
-  //       imageUrl: imageUrl,
-  //     })
-  //     .then((data) => {
-  //       console.log(data);
-  //       navigate("/Residences");
-  //     })
-  //     // .then((res) => {
-  //     //   if (res.data.added) {
-  //     //     navigate("/Residences");
-  //     //   } else {
-  //     //     console.log(res);
-  //     //   }
-  //     // })
-  //     .catch((err) => console.log(err));
-  // };
-
-  // const handleSubmit = async (e) => {
-  //   e.preventDefault();
-  //   const formData = new FormData();
-  //   formData.append("image", residence.image);
-  //   formData.append("name", residence.name);
-  //   formData.append("price", residence.price);
-  //   formData.append("description", residence.description);
-
-  //   console.log(residence.image);
-
-  //   const res = await axios.post("http://localhost:3001/upload", formData);
-  //   setImageUrl(`http://localhost:3001/public/images/${res.data.filename}`);
-  //   console.log(res);
-  // };
-
-  const handleSubmit = async(e) => {
-e.preventDefault()
-const {name, description, price} = e.target
-const res = await axios.post("http://localhost:3001/residences/add", residence, {withCredentials:true})
-console.log(res);
-  }
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    try{
+      const res = await axios.post("http://localhost:3001/residences/add", residence, {withCredentials:true});
+      setResidence({
+        name: "",
+        description: "",
+        price: "",
+        image:""
+      })
+      if(res.status === 200) {
+navigate("/residences")
+      }
+    } catch(err) {
+      console.log(err);
+    }
+  };
 
   const handleChange = (e) => {
     const { name, value } = e.target;
     setResidence({ ...residence, [name]: value });
   };
 
-  // const handleImage = (e) => {
-  //   console.log(e.target.files);
-  //   setResidence({ ...residence, image: e.target.files[0] });
-  //   console.log(residence.image);
-  // };
+  const handleImage = (e) => {
+   const file = e.target.files[0]
+   setFileToBase(file)
+  };
 
+  const setFileToBase = (file) => {
+const reader = new FileReader()
+reader.readAsDataURL(file)
+reader.onloadend = () => {
+  setResidence({...residence, image: reader.result})
+}
+  }
+
+console.log(residence);
   return (
     <div className="athlete-form-container">
-      <form className="athlete-form" onSubmit={handleSubmit} >
+      <form className="athlete-form" onSubmit={handleSubmit}>
         <h2>Add Residence</h2>
         <div className="form-group">
           <label htmlFor="residence">Name :</label>
@@ -106,16 +89,9 @@ console.log(res);
         </div>
         <div className="form-group">
           <label htmlFor="image">Image URL :</label>
-          <input type="file" accept="image/*" />
-          <button >Upload</button>
+          <img src={residence.image} alt="Uploaded" style={{ width: "120px", height: "120px", objectFit: "contain" }} />
+          <input type="file" name="image" onChange={handleImage} accept="image/*" />
         </div>
-
-        {/* <img
-          src={`http://localhost:3001/images/${imageName}`}
-          alt="Residence"
-          style={{ maxWidth: "100%" }}
-        /> */}
-
         <button type="submit" className="btn-register">
           Add
         </button>

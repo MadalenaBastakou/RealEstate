@@ -10,12 +10,13 @@ const Residences = () => {
     fetchData()
   }, []);
 
-console.log(residences);
-
-const fetchData = async () => {
-  const res = await axios.get("http://localhost:3001/residences", {withCredentials:true})
- setResidences(res.data)
-}
+  const fetchData = async () => {
+    axios
+      .get("http://localhost:3001/residences", { withCredentials: true })
+      .then(({ data }) => {
+        setResidences(data);
+      })
+  }
 
   return (
     <div className="exercise-page">
@@ -23,7 +24,7 @@ const fetchData = async () => {
         {residences.map((residence) => {
           return (
             <ResidenceCard
-              key={residence.id}
+              key={residence._id}
               residence={residence}
             ></ResidenceCard>
           );
