@@ -52,3 +52,9 @@
   margin: 0 auto;
   object-fit: contain;
 }
+
+.home-buttons {
+  display: flex;
+  gap: 2rem;
+  margin-inline: 6rem;
+}

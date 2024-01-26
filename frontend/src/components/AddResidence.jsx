@@ -9,6 +9,7 @@ const AddResidence = () => {
   const [residence, setResidence] = useState({
     name: "",
     description: "",
+    category:"",
     price: "",
     image: "",
   });
@@ -61,13 +62,10 @@ const AddResidence = () => {
     }
   };
 
+console.log(residence);
+
   return (
-    <div
-      className="athlete-form-container"
-      action="/upload"
-      method="POST"
-      enctype="multipart/form-data"
-    >
+    <div className="athlete-form-container">
       <form className="athlete-form" onSubmit={handleSubmit}>
         <h2>Add Residence</h2>
         <div className="form-group">
@@ -79,6 +77,14 @@ const AddResidence = () => {
             value={residence.name}
             onChange={handleChange}
           />
+        </div>
+        <div className="form-group">
+          <label htmlFor="Category">Category</label>
+          <select name="category" id="category" onChange={handleChange}>
+            <option value="forRent">Select category</option>
+            <option value="forRent">For Rent</option>
+            <option value="forSale">For Sale</option>
+          </select>
         </div>
         <div className="form-group">
           <label htmlFor="description">Price :</label>
