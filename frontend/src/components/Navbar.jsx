@@ -13,7 +13,6 @@ const Navbar = () => {
     const res = await axios.get("http://localhost:3001/logout")
     removeCookie('token', { path: '/' });
     console.log(res);
-    // browser.cookies.remove('loginToken')
   }
 
 // return 2 different navbars depending if there is a cookie or not 

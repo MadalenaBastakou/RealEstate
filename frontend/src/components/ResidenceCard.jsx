@@ -2,10 +2,10 @@ import React from "react";
 import { Link } from "react-router-dom";
 
 const ResidenceCard = ({ residence }) => {
-  const { name, description, imageUrl, price } = residence;
+  const { name, description, image, price } = residence;
   return (
     <div className="exercise-card">
-      <img src={imageUrl} alt={name} className="exercise-image" />
+      <img src={image.url} alt={name} className="exercise-image" />
       <div className="exercise-details">
         <h3>{name}</h3>
         <p>{price}</p>
