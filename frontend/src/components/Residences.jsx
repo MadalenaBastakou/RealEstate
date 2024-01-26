@@ -2,6 +2,7 @@ import axios from "axios";
 import React, { useEffect, useState } from "react";
 import ResidenceCard from "./ResidenceCard";
 import "../css/Residences.css";
+// import { useNavigate } from "react-router-dom";
 
 const Residences = () => {
   const [residences, setResidences] = useState([]);
@@ -10,12 +11,18 @@ const Residences = () => {
     fetchData()
   }, []);
 
-console.log(residences);
+  console.log(residences);
 
-const fetchData = async () => {
-  const res = await axios.get("http://localhost:3001/residences", {withCredentials:true})
- setResidences(res.data)
-}
+  // const navigate = useNavigate();
+
+  const fetchData = async () => {
+    axios
+      .get("http://localhost:3001/residences", { withCredentials: true })
+      .then(({ data }) => {
+        // console.log(data);
+        setResidences(data);
+      })
+  }
 
   return (
     <div className="exercise-page">
