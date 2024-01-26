@@ -1,11 +1,12 @@
 import { Residence } from "../models/Residence.js";
 
 const add = async (req, res) => {
-  const { name, price, description, image} = req.body;
+  const { name, price, category, description, image} = req.body;
   try {
  await Residence.create({
     name,
     price,
+    category,
     description,
     image,
     user: req.user._id
@@ -20,6 +21,17 @@ const add = async (req, res) => {
 const fetchAll = async (req, res) => {
   try {
     const residence = await Residence.find({ user: req.user._id });
+    return res.json(residence);
+  } catch (err) {
+    console.log(err);
+    return res.json(err);
+  }
+};
+
+
+const fetchCategory= async (req, res) => {
+  try {
+    const residence = await Residence.find({ category:req.params.category,user: req.user._id });
     return res.json(residence);
   } catch (err) {
     console.log(err);
@@ -57,4 +69,4 @@ const deleteResidence = async (req, res) => {
   }
 };
 
-export default { add, fetchAll, fetchOne, updateResidence, deleteResidence };
+export default { add, fetchAll, fetchOne, fetchCategory , updateResidence, deleteResidence };
