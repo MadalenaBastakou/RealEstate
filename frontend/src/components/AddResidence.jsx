@@ -3,33 +3,33 @@ import "../css/SignUp.css";
 import { useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import BarLoader from "react-spinners/BarLoader";
 
 const AddResidence = () => {
   const [residence, setResidence] = useState({
     name: "",
     description: "",
     price: "",
-    image:""
+    image: "",
   });
-
-
+  const [file, setFile] = useState();
+  const [loading, setLoading] = useState(false);
+  const [loadTime, setLoadTime] = useState(0);
 
   const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    try{
-      const res = await axios.post("http://localhost:3001/residences/add", residence, {withCredentials:true});
-      setResidence({
-        name: "",
-        description: "",
-        price: "",
-        image:""
-      })
-      if(res.status === 200) {
-navigate("/residences")
+    try {
+      const res = await axios.post(
+        "http://localhost:3001/residences/add",
+        residence,
+        { withCredentials: true }
+      );
+      if (res.status === 200) {
+        navigate("/residences");
       }
-    } catch(err) {
+    } catch (err) {
       console.log(err);
     }
   };
@@ -39,22 +39,35 @@ navigate("/residences")
     setResidence({ ...residence, [name]: value });
   };
 
-  const handleImage = (e) => {
-   const file = e.target.files[0]
-   setFileToBase(file)
+  const handleImage = async (e) => {
+    const file = e.target.files[0];
+    const formData = new FormData();
+    formData.append("image", file);
+
+    setLoading(true);
+
+    const startTime = performance.now(); // Record start time
+    try {
+      const res = await axios.post("http://localhost:3001/upload", formData, {
+        withCredentials: true,
+      });
+      setResidence({ ...residence, image: res.data.path });
+    } catch (err) {
+      console.error("Error uploading image:", err);
+    } finally {
+      const endTime = performance.now();
+      setLoadTime(endTime - startTime);
+      setLoading(false);
+    }
   };
 
-  const setFileToBase = (file) => {
-const reader = new FileReader()
-reader.readAsDataURL(file)
-reader.onloadend = () => {
-  setResidence({...residence, image: reader.result})
-}
-  }
-
-console.log(residence);
   return (
-    <div className="athlete-form-container">
+    <div
+      className="athlete-form-container"
+      action="/upload"
+      method="POST"
+      enctype="multipart/form-data"
+    >
       <form className="athlete-form" onSubmit={handleSubmit}>
         <h2>Add Residence</h2>
         <div className="form-group">
@@ -89,8 +102,14 @@ console.log(residence);
         </div>
         <div className="form-group">
           <label htmlFor="image">Image URL :</label>
-          <img src={residence.image} alt="Uploaded" style={{ width: "120px", height: "120px", objectFit: "contain" }} />
-          <input type="file" name="image" onChange={handleImage} accept="image/*" />
+          <div>{loading && <BarLoader color="#36d7b7" />}</div>
+          {/* <img src={residence.image} alt="Uploaded" style={{ width: "120px", height: "120px", objectFit: "contain" }} /> */}
+          <input
+            type="file"
+            name="image"
+            onChange={handleImage}
+            accept="image/*"
+          />
         </div>
         <button type="submit" className="btn-register">
           Add
