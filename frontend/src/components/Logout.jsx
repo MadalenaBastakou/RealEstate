@@ -8,7 +8,7 @@ const Logout = () => {
   useEffect(() => {
     const logout = async() => {
       const res = await axios.get("http://localhost:3001/logout")
-      console.log(res);
+
       // if(res.status === 200) {
       //   navigate('/login')
       // }
