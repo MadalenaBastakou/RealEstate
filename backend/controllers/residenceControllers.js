@@ -2,7 +2,13 @@ import { Residence } from "../models/Residence.js";
 
 const add = async (req, res) => {
   try {
-    const { name, price, description, image } = req.body;
+    console.log(req.file);
+    const { name, price, description } = req.body;
+    if (!req.file) {
+      return res.status(400).json({ message: "No file uploaded" });
+    }
+    const image = req.file.path;
+    console.log(image);
     await Residence.create({
       name,
       price,

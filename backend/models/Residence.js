@@ -5,7 +5,7 @@ const residenceSchema = new mongoose.Schema({
   name: { type: String, required: true },
   price: { type: String, required: true },
   description: { type: String, required: true },
-  images: {data: Buffer, contentType: String }
+  image:{type: String}
 });
 
 const Residence = mongoose.model("Residence", residenceSchema);
