@@ -1,4 +1,3 @@
-import axios from "axios";
 import React from "react";
 import { Link } from "react-router-dom";
 
@@ -7,7 +6,7 @@ const ResidenceCard = ({ residence, deleteResidence }) => {
 
   return (
     <div className="exercise-card">
-      <img src={image.url} alt={name} className="exercise-image" />
+      <img src={image} alt={name} className="exercise-image" />
       <div className="exercise-details">
         <h3>{name}</h3>
         <p>{price}</p>
