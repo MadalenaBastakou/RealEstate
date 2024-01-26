@@ -11,7 +11,6 @@ function RequireAuth(props) {
     axios
       .get("http://localhost:3001/verify", { withCredentials: true })
       .then(({data}) => {
-        console.log (data);
         if (data.message === "User is not valid") {
           setLoggedIn(false);
           navigate("/login")

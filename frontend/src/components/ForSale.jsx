@@ -3,32 +3,31 @@ import React, { useEffect, useState } from "react";
 import ResidenceCard from "./ResidenceCard";
 import "../css/Residences.css";
 
-const Residences = () => {
-  const [residences, setResidences] = useState([]);
+const ForSale = () => {
+  const [resForSale, setResForSale] = useState([]);
 
   useEffect(() => {
-    fetchData()
+    fetchData();
   }, []);
 
   const fetchData = async () => {
-    axios
-      .get("http://localhost:3001/residences", { withCredentials: true })
-      .then(({ data }) => {
-        setResidences(data);
-      })
-  }
+    const res = await axios.get("http://localhost:3001/residences/forSale", {
+      withCredentials: true,
+    });
+    setResForSale(res.data);
+  };
 
   const deleteResidence = async (id) => {
     await axios.delete(`http://localhost:3001/residences/${id}`, {
       withCredentials: true,
     });
-    fetchData()
+    fetchData();
   };
 
   return (
     <div className="exercise-page">
       <div className="exercise-list">
-        {residences.map((residence) => {
+        {resForSale.map((residence) => {
           return (
             <ResidenceCard
               key={residence._id}
@@ -42,4 +41,4 @@ const Residences = () => {
   );
 };
 
-export default Residences;
+export default ForSale;
