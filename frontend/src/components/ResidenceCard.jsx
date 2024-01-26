@@ -1,8 +1,13 @@
+import axios from "axios";
 import React from "react";
 import { Link } from "react-router-dom";
 
 const ResidenceCard = ({ residence }) => {
-  const { name, description, imageUrl, price } = residence;
+
+  const deleteResidence = async (id) => {
+    await axios.delete(`http://localhost:3001/residences/${id}`, {withCredentials:true});
+  };
+  const { _id, name, description, imageUrl, price } = residence;
   return (
     <div className="exercise-card">
       <img src={imageUrl} alt={name} className="exercise-image" />
@@ -17,10 +22,8 @@ const ResidenceCard = ({ residence }) => {
             Edit
           </Link>
         </button>
-        <button>
-          <Link to={`/delete/${residence._id}`} className="btn-link">
+        <button className="btn-link" onClick={() => deleteResidence(residence._id)}>
             Delete
-          </Link>
         </button>
       </div>
     </div>
