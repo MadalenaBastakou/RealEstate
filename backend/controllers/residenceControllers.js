@@ -28,10 +28,19 @@ const fetchAll = async (req, res) => {
   }
 };
 
-
-const fetchCategory= async (req, res) => {
+const fetchForRent= async (req, res) => {
   try {
-    const residence = await Residence.find({ category:req.params.category,user: req.user._id });
+    const residence = await Residence.find({ category:"forRent",user: req.user._id });
+    return res.json(residence);
+  } catch (err) {
+    console.log(err);
+    return res.json(err);
+  }
+};
+
+const fetchForSale= async (req, res) => {
+  try {
+    const residence = await Residence.find({ category:"forSale",user: req.user._id });
     return res.json(residence);
   } catch (err) {
     console.log(err);
@@ -69,4 +78,4 @@ const deleteResidence = async (req, res) => {
   }
 };
 
-export default { add, fetchAll, fetchOne, fetchCategory , updateResidence, deleteResidence };
+export default { add, fetchAll, fetchOne, fetchForRent ,fetchForSale, updateResidence, deleteResidence };

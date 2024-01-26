@@ -7,7 +7,8 @@ const residenceRouter = express.Router();
 residenceRouter.post("/add", verifyUser, residenceController.add);
 
 residenceRouter.get("/", verifyUser, residenceController.fetchAll);
-residenceRouter.get("/:category", verifyUser, residenceController.fetchCategory);
+residenceRouter.get("/forRent", verifyUser, residenceController.fetchForRent);
+residenceRouter.get("/forSale", verifyUser, residenceController.fetchForSale);
 
 residenceRouter.get("/:id", verifyUser, residenceController.fetchOne);
 
