@@ -18,6 +18,13 @@ const Residences = () => {
       })
   }
 
+  const deleteResidence = async (id) => {
+    await axios.delete(`http://localhost:3001/residences/${id}`, {
+      withCredentials: true,
+    });
+    fetchData()
+  };
+
   return (
     <div className="exercise-page">
       <div className="exercise-list">
@@ -26,6 +33,7 @@ const Residences = () => {
             <ResidenceCard
               key={residence._id}
               residence={residence}
+              deleteResidence={deleteResidence}
             ></ResidenceCard>
           );
         })}
