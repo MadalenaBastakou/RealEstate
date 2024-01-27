@@ -30,7 +30,7 @@ function App() {
       <Route path="/forRent" element={<RequireAuth><ForRent /></RequireAuth>}/>
       <Route path="/logout" element={<Logout />}></Route>
     </Routes>
-    <Footer/>
+    {/* <Footer/> */}
     </BrowserRouter>
   )
 }
