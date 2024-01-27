@@ -17,7 +17,7 @@ const Navbar = () => {
 
 // return 2 different navbars depending if there is a cookie or not 
   return (
-    <nav className="navbar">
+    <nav className="navbar ps-4 pe-4">
       <div className="navbar-left">
         <Link to="/" className="navbar-brand">
           <img src={Logo} alt="logo" />
@@ -30,7 +30,7 @@ const Navbar = () => {
         <Link to="/addresidence" className="navbar-link">
           Add Residence
         </Link>  
-        <Link to="/login" className="navbar-link" onClick={handleLogout} >
+        <Link to="/login" className="navbar-link logout" onClick={handleLogout} >
           Logout
         </Link> </div> : 
         <div className="navbar-right">
