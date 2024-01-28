@@ -85,6 +85,7 @@ const EditResidence = ({
           name: name,
           price: price,
           description: description,
+          category:category,
           image: imageUrl,
         },
         { withCredentials: true }
