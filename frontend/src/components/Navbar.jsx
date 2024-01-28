@@ -23,7 +23,7 @@ const Navbar = () => {
           <img src={Logo} alt="logo" />
         </Link>
       </div>
-      {(Object.keys(cookie).length != 0) ? <div className="navbar-right">
+      {(Object.keys(cookie).length !== 0) ? <div className="navbar-right">
         <Link to="/residences" className="navbar-link">
           Residences
         </Link>
