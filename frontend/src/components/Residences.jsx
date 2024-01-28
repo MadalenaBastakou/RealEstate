@@ -2,26 +2,33 @@ import axios from "axios";
 import React, { useEffect, useState } from "react";
 import ResidenceCard from "./ResidenceCard";
 import {
-  MDBBtn,
-  MDBModal,
-  MDBModalDialog,
-  MDBModalContent,
-  MDBModalHeader,
-  MDBModalTitle,
-  MDBModalBody,
-  MDBModalFooter,
-} from 'mdb-react-ui-kit';
+  MDBContainer,
+  MDBRow,
+  MDBCol,
+} from "mdb-react-ui-kit";
 import "../css/Residences.css";
+import toast, { Toaster } from "react-hot-toast";
+import ConfirmationDeleteModal from "./ConfirmationDeleteModal";
+import EditResidence from "./EditResidence";
 
 const Residences = () => {
   const [residences, setResidences] = useState([]);
-  const [show, setShow] = useState(false);
+  // const [show, setShow] = useState(false);
   const [residenceId, setResidenceId] = useState("");
+  const [residenceToUpdate, setResidenceToUpdate] = useState()
+  
+const [deleteId, setDeleteId] = useState()
+  const [show, setShow] = useState(false);
+  const [editMode, setEditMode] = useState(false);
+
+
+  const finishEdit = () => setEditMode(false);
   const handleClose = () => setShow(false);
-  const showAlert = () => setShow(true);
+  // const showAlert = () => setShow(true);
+  
 
   useEffect(() => {
-    fetchData()
+    fetchData();
   }, []);
 
   const fetchData = async () => {
@@ -29,16 +36,13 @@ const Residences = () => {
       .get("http://localhost:3001/residences", { withCredentials: true })
       .then(({ data }) => {
         setResidences(data);
-      })
-  }
+      });
+  };
 
   // show delete confirmation box
   const handleDeleteAlert = (id) => {
     setResidenceId(id);
-    showAlert();
-    setTimeout(() => {
-      setShow(false);
-    }, 2000);
+    // showAlert();
   };
 
   // handle delete residence
@@ -46,39 +50,69 @@ const Residences = () => {
     await axios.delete(`http://localhost:3001/residences/${id}`, {
       withCredentials: true,
     });
+    toast.success("Residence deleted successfully!", { duration: 1500 });
     fetchData();
+  // showAlert()
+  setShow(false)
     handleClose();
     handleDeleteAlert();
   };
 
+  const handleEditMode = (residence) => {
+    setResidenceToUpdate(residence)
+    setEditMode(true)
+  }
+
+  const handleShow = (id) => {
+    setDeleteId(id)
+    setShow(true)
+  }
+
   return (
-    <div className="exercise-page">
-      <div className="exercise-list">
+    <MDBContainer>
         {show && (
-          <MDBModal open={show} tabIndex='-1'>
-            <MDBModalDialog>
-              <MDBModalContent>
-                <MDBModalHeader>
-                  <MDBModalTitle>Delete confirmation</MDBModalTitle>
-                </MDBModalHeader>
-                <MDBModalBody>Deleted successfully</MDBModalBody>
-              </MDBModalContent>
-            </MDBModalDialog>
-          </MDBModal>
-        )}
+               <ConfirmationDeleteModal
+                 residenceId={residenceId}
+                 show={show}
+                 handleClose={handleClose}
+                 deleteResidence={deleteResidence}
+                 deleteId={deleteId}
+               />
+             )}
+       
+             {editMode && (
+               <EditResidence
+                 show={editMode}
+                 residenceId={residenceId}
+                 finishEdit={finishEdit}
+                 fetchData={fetchData}
+                 residenceToUpdate={residenceToUpdate}
+               />
+             )}
+      <MDBRow className='mt-3'>
+        <Toaster />
         {residences.map((residence, index) => {
+          
           return (
-              <ResidenceCard
-                key={residence._id}
-                residence={residence}
-                deleteResidence={deleteResidence}
-                handleDeleteAlert={handleDeleteAlert}
-                fetchData={fetchData}
-              ></ResidenceCard>
+            <MDBCol md='3'>
+            <ResidenceCard
+              key={residence._id}
+              residence={residence}
+              deleteResidence={deleteResidence}
+              handleDeleteAlert={handleDeleteAlert}
+              fetchData={fetchData}
+              show={show}
+              editMode={editMode}
+              finishEdit={finishEdit}
+              handleEditMode={handleEditMode}
+              handleShow={handleShow}
+            ></ResidenceCard>
+        </MDBCol>
           );
         })}
-      </div>
-    </div>
+        </MDBRow>
+        </MDBContainer>
+   
   );
 };
 
