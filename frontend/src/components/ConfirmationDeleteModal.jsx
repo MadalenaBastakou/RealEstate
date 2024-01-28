@@ -2,8 +2,6 @@ import React from 'react';
 import {
     MDBBtn,
     MDBModal,
-    MDBModalDialog,
-    MDBModalContent,
     MDBModalHeader,
     MDBModalTitle,
     MDBModalBody,
@@ -11,20 +9,20 @@ import {
   } from 'mdb-react-ui-kit';
   import "../css/Residences.css";
 
-function ConfirmationDeleteModal({residence, show, handleClose, deleteResidence}) {
+function ConfirmationDeleteModal({residenceId, show, handleClose, deleteResidence,deleteId}) {
     return (
       <>
-        <MDBModal id="modal" open={show} onHide={handleClose} animation={false}>
+        <MDBModal id="modal" open={show} onHide={handleClose}>
             <MDBModalHeader closeButton >
               <MDBModalTitle>Delete a residence</MDBModalTitle>
               <MDBBtn className='btn-close' color='none' onClick={handleClose}></MDBBtn>
             </MDBModalHeader>
             <MDBModalBody>Are you sure you want to delete this residence?</MDBModalBody>
             <MDBModalFooter>
-              <MDBBtn color="secondary" style={{backgroundColor: "#FF725E"}} onClick={() => deleteResidence(residence._id)}>
+              <MDBBtn color="secondary" style={{backgroundColor: "#FF725E", color:"white"}} onClick={() => deleteResidence(deleteId)}>
                 Yes
               </MDBBtn>
-              <MDBBtn color="secondary" onClick={handleClose}>
+              <MDBBtn color="secondary" style={{ color:"white"}} onClick={handleClose}>
                 No
               </MDBBtn>
             </MDBModalFooter>

@@ -1,41 +1,52 @@
 import { User } from "../models/User.js";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
-
+import validator from "validator";
 
 const register = async (req, res) => {
   try {
     const { username, email, password } = req.body;
+    
+    if (!username || !password || !email) {
+      return res.status(400).json({ msg: "Please enter all the fields" });
+    }
+    if (!validator.isEmail(email)) {
+      return res.status(400).json({ msg: "Invalid email format" });
+    }
     const user = await User.findOne({ username });
     if (user) {
-      return res.json({ message: "User is registered" });
+      return res.status(400).json({ msg: "User is registered" });
     }
+    if(password.length < 6){
+      return res.status(400).json({ msg: "Password should be at least 6 characters" });
+    }
+
     const hashPassword = await bcrypt.hash(password, 10);
     await User.create({ username, email, password: hashPassword });
-    if (!email || !password || !username) {
-      return res.status(400).json({ message: "Please enter all the fields" });
-    }
-    return res.status(200).json({ message: "User created successfully" });
+
+    return res.status(200).json({ msg: "User created successfully" });
   } catch (err) {
-    return res.json({ message: "Error in registering user" });
+    res.json(err);
   }
 };
 
 const login = async (req, res) => {
   try {
     const { username, password } = req.body;
-    //   if (role === "user") {
+    if (!username || !password) {
+      return res.status(400).send({ msg: "Please enter all the fields" });
+    }
     const user = await User.findOne({ username });
     if (!user) {
-      return res.json({ message: "User not registered" });
+      return res.status(400).send({ msg: "User not registered" });
     }
     const validPassword = await bcrypt.compare(password, user.password);
     if (!validPassword) {
-      return res.json({ message: "Wrong Password" });
+      return res.status(400).send({ msg: "Wrong password" });
     }
     const token = jwt.sign({ username: user.username }, process.env.User_Key);
     res.cookie("token", token);
-    return res.json({ login: true });
+    return res.status(200).json({ login: true });
   } catch (err) {
     res.json(err);
   }
@@ -51,7 +62,7 @@ const verify = (req, res) => {
 
 const logout = (req, res) => {
   res.clearCookie("token");
-  return res.json({ logout: true } );
+  return res.json({ logout: true });
 };
 
 export default { register, login, verify, logout };

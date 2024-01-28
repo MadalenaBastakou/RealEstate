@@ -2,6 +2,9 @@ import { Residence } from "../models/Residence.js";
 
 const add = async (req, res) => {
   const { name, price, category, description, image} = req.body;
+  if(!name || !price || !category || !description ||!image) {
+    return res.status(400).json({msg: "Please enter all the fields"})
+  }
   try {
  await Residence.create({
     name,
@@ -14,7 +17,7 @@ const add = async (req, res) => {
     return res.status(200).json({ added: true });
   } catch (err) {
     console.log(err);
-    return res.status(500).json({ message: "Error in adding residence"});
+    res.json(err);
   }
 };
 
