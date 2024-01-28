@@ -74,16 +74,20 @@ import {
   MDBCheckbox,
   MDBIcon,
 } from "mdb-react-ui-kit";
+import toast, { Toaster } from 'react-hot-toast';
 
 function Login() {
   const [user, setUser] = useState({
     username: "",
     password: "",
   });
+  const [show, setShow] = useState(false);
+  const [error, setError] = useState("");
 
   const navigate = useNavigate();
 
   const handleInput = (e) => {
+    setShow(false)
     const { name, value } = e.target;
     setUser((prevUser) => ({ ...prevUser, [name]: value }));
   };
@@ -97,7 +101,8 @@ function Login() {
         navigate("/");
       }
     } catch (err) {
-      console.error("Login failed", err);
+      setError(err.response.data.msg);
+      setShow(true)
     }
   };
   return (
@@ -130,8 +135,8 @@ function Login() {
               label="Username"
               name="username"
               id="form1"
-              value={user.username}
               type="username"
+              size="lg"
               onChange={handleInput}
             />
             <MDBInput
@@ -139,20 +144,33 @@ function Login() {
               label="Password"
               id="form1"
               name="password"
-              value={user.password}
               type="password"
+              size="lg"
               onChange={handleInput}
             />
+           {show &&  <div
+              className="mb-4"
+              style={{
+                color: "red",
+                backgroundColor:"#f9e1e5",
+                color: "#af233a",
+                borderRadius:"5px",
+                textAlign:"left",
+                padding:"0.8rem"
+              }}
+            >
+             <MDBIcon fas icon="times" className="me-2"/>{error}
+            </div>}
             <div className="d-flex justify-content-flex-start text-left">
               <p>
                 Don't have an account yet?{" "}
                 <a
-                href="/register"
+                  href="/register"
                   style={{
-                    textDecoration: "underline",
+             
                     color: "#2d9ee0",
                     fontFamily: "'Oswald', sans-serif",
-                    fontSize: "900",
+                    fontWeight: "900",
                     cursor: "pointer",
                   }}
                 >

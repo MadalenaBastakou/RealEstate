@@ -4,6 +4,7 @@
   background-color: #f7f8f8;
   height: 90vh;
 }
+
 .exercise-list {
   display: flex;
   justify-content: center;
@@ -61,3 +62,15 @@
   text-decoration: none;
   color: white;
 }
+
+#modal {
+  border-radius: 10px;
+  background-color: whitesmoke;
+  width: fit-content;
+  height: fit-content;
+  position: absolute;
+  top: auto;
+  left: auto;
+}
+
+
