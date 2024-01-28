@@ -1,6 +1,6 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
-import { Navigate, useNavigate, useSearchParams } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 function RequireAuth(props) {
   const [loggedIn, setLoggedIn] = useState(null);
@@ -11,7 +11,6 @@ function RequireAuth(props) {
     axios
       .get("http://localhost:3001/verify", { withCredentials: true })
       .then(({data}) => {
-        console.log (data);
         if (data.message === "User is not valid") {
           setLoggedIn(false);
           navigate("/login")

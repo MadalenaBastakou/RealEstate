@@ -1,18 +1,18 @@
 import dotenv from "dotenv";
 dotenv.config();
+import storage from "./storage/storage.js";
+const upload = multer({ storage });
 import connectToDb from "./config/connectToDb.js";
 import express from "express";
 import cors from "cors";
 import cookieParser from "cookie-parser";
 import multer from "multer";
-import { v4 as uuidv4 } from 'uuid';
-import path from "path";
+
 import "./config/connectToDb.js";
 import { userRouter } from "./routes/userRoutes.js";
 import { residenceRouter } from "./routes/residenceRoute.js";
-import { log } from "console";
-import { Residence } from "./models/Residence.js";
 
+import bodyParser from "body-parser";
 
 const app = express();
 
@@ -20,40 +20,16 @@ connectToDb();
 
 app.use(express.json());
 app.use(cookieParser());
+app.use(bodyParser.json({ limit: "50mb" }));
+app.use(bodyParser.urlencoded({ limit: "50mb", extended: true }));
 app.use(cors({ origin: ["http://localhost:3000"], credentials: true }));
 
-const fileStorageEngine = multer.diskStorage({
-  destination: (req, file, cb) => {
-    cb(null, "./public/images");
-  },
-  filename: (req, file, cb) => {
-    cb( null,Date.now() + "--" + file.originalname);
-  },
+app.post("/upload", upload.single("image"), (req, res) => {
+  res.send(req.file);
 });
-
-// const fileFilter = (req, file, cb) => {
-//   const allowedFileTypes = ['image/jpeg', 'image/jpg', 'image/png']
-//   if(allowedFileTypes.includes(file.mimetype)) {
-//     cb(null, true)
-//   } else {
-//     cb(null, false)
-//   }
-// }
-
-let upload = multer({storage: fileStorageEngine})
 
 app.use("/", userRouter);
 app.use("/residences", residenceRouter);
-
-app.post("/single", upload.single("image"), (req, res) => {
-  console.log(req.file);
-  res.send("Single File upload success")
-});
-
-app.post("/multiple", upload.array("images", 3), (req, res) => {
-  console.log(req.files);
-  res.send("Multiple Files upload success")
-});
 
 app.listen(process.env.PORT, () => {
   console.log("Server is running");

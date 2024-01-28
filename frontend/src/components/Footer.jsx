@@ -4,7 +4,12 @@ import "../css/Footer.css";
 const Footer = () => {
   return (
     <footer className="footer">
-      <p>Made by Social Hackers - Course 23👀🤖</p>
+      <span href="#" by="Flowbite™" year={2022}></span>
+      <ul>
+        <li href="#">About</li>
+        <li href="#">Privacy Policy</li>
+        <li href="#">Contact</li>
+      </ul>
     </footer>
   );
 };
