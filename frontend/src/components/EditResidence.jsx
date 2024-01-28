@@ -50,8 +50,6 @@ const EditResidence = ({
       .catch((err) => console.log(err));
   }, []);
 
-  
-
   const handleImage = async (e) => {
     const file = e.target.files[0];
     const formData = new FormData();
@@ -85,7 +83,7 @@ const EditResidence = ({
           name: name,
           price: price,
           description: description,
-          category:category,
+          category: category,
           image: imageUrl,
         },
         { withCredentials: true }
@@ -101,7 +99,7 @@ const EditResidence = ({
       .catch((err) => console.log(err));
   };
 
-  console.log(residenceToUpdate)
+  console.log(residenceToUpdate);
 
   return (
     <MDBContainer fluid>
@@ -161,15 +159,14 @@ const EditResidence = ({
                     name="category"
                     label="For Rent"
                     inline
-                   
                   />
                   <MDBRadio
-                    onChange={(e) => {console.log(category);
-                      setCategory(e.target.value)}}
+                    onChange={(e) => {
+                      setCategory(e.target.value);
+                    }}
                     id="inlineRadio2"
                     name="category"
                     value="for Sale"
-                   
                     label="For Sale"
                     inline
                   />

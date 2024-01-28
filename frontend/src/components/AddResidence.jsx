@@ -23,7 +23,7 @@ function AddResidence() {
   const [residence, setResidence] = useState({
     name: "",
     description: "",
-    category: "for Rent",
+    category: "",
     price: "",
     image: "",
   });
@@ -73,7 +73,7 @@ function AddResidence() {
     setResidence({ ...residence, [name]: value });
   };
 
-  console.log(error);
+  console.log(residence);
 
   const handleImage = async (e) => {
     setShow(false);
@@ -176,17 +176,17 @@ function AddResidence() {
                   <MDBRadio
                     onChange={handleChange}
                     id="inlineRadio1"
-                    value="for Rent"
+                    value="forRent"
                     name="category"
                     label="For Rent"
                     inline
-                    defaultChecked
+                   
                   />
                   <MDBRadio
                     onChange={handleChange}
                     id="inlineRadio2"
                     name="category"
-                    value="for Sale"
+                    value="forSale"
                     label="For Sale"
                     inline
                   />
