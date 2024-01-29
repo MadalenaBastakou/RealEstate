@@ -1,20 +1,23 @@
 import { Residence } from "../models/Residence.js";
 
 const add = async (req, res) => {
-  const { name, price, category, description, image} = req.body;
+  const { name, price, category, description, image } = req.body;
+  if (!name || !price || !category || !description || !image) {
+    return res.status(400).json({ msg: "Please enter all the fields" });
+  }
   try {
- await Residence.create({
-    name,
-    price,
-    category,
-    description,
-    image,
-    user: req.user._id
-  });
+    await Residence.create({
+      name,
+      price,
+      category,
+      description,
+      image,
+      user: req.user._id,
+    });
     return res.status(200).json({ added: true });
   } catch (err) {
     console.log(err);
-    return res.status(500).json({ message: "Error in adding residence"});
+    res.json(err);
   }
 };
 
@@ -28,9 +31,9 @@ const fetchAll = async (req, res) => {
   }
 };
 
-const fetchForRent= async (req, res) => {
+const fetchAllResidences = async (req, res) => {
   try {
-    const residence = await Residence.find({ category:"forRent",user: req.user._id });
+    const residence = await Residence.find({});
     return res.json(residence);
   } catch (err) {
     console.log(err);
@@ -38,9 +41,25 @@ const fetchForRent= async (req, res) => {
   }
 };
 
-const fetchForSale= async (req, res) => {
+const fetchForRent = async (req, res) => {
   try {
-    const residence = await Residence.find({ category:"forSale",user: req.user._id });
+    const residence = await Residence.find({
+      category: "forRent",
+      user: req.user._id,
+    });
+    return res.json(residence);
+  } catch (err) {
+    console.log(err);
+    return res.json(err);
+  }
+};
+
+const fetchForSale = async (req, res) => {
+  try {
+    const residence = await Residence.find({
+      category: "forSale",
+      user: req.user._id,
+    });
     return res.json(residence);
   } catch (err) {
     console.log(err);
@@ -51,7 +70,7 @@ const fetchForSale= async (req, res) => {
 const fetchOne = async (req, res) => {
   try {
     const id = req.params.id;
-    const residence = await Residence.findById({ _id: id , user: req.user._id});
+    const residence = await Residence.findById({ _id: id, user: req.user._id });
     return res.json(residence);
   } catch (err) {
     return res.json(err);
@@ -61,7 +80,11 @@ const fetchOne = async (req, res) => {
 const updateResidence = async (req, res) => {
   try {
     const id = req.params.id;
-    const residence = await Residence.findOneAndUpdate({ _id: id, user:req.user._id }, req.body, {new: true});
+    const residence = await Residence.findOneAndUpdate(
+      { _id: id, user: req.user._id },
+      req.body,
+      { new: true }
+    );
     return res.json({ updated: true, residence });
   } catch (err) {
     return res.json(err);
@@ -71,11 +94,23 @@ const updateResidence = async (req, res) => {
 const deleteResidence = async (req, res) => {
   try {
     const id = req.params.id;
-    const residence = await Residence.deleteOne({ _id: id, user: req.user._id });
-    return res.json({ deleted: true});
+    const residence = await Residence.deleteOne({
+      _id: id,
+      user: req.user._id,
+    });
+    return res.json({ deleted: true });
   } catch (err) {
     return res.json(err);
   }
 };
 
-export default { add, fetchAll, fetchOne, fetchForRent ,fetchForSale, updateResidence, deleteResidence };
+export default {
+  add,
+  fetchAll,
+  fetchAllResidences,
+  fetchOne,
+  fetchForRent,
+  fetchForSale,
+  updateResidence,
+  deleteResidence,
+};

@@ -24,8 +24,11 @@ const Navbar = () => {
         </Link>
       </div>
       {(Object.keys(cookie).length !== 0) ? <div className="navbar-right">
+      <Link to="/all-residences" className="navbar-link">
+          All Residences
+        </Link>
         <Link to="/residences" className="navbar-link">
-          Residences
+          My Residences
         </Link>
         <Link to="/addresidence" className="navbar-link">
           Add Residence
@@ -34,6 +37,9 @@ const Navbar = () => {
           Logout
         </Link> </div> : 
         <div className="navbar-right">
+          <Link to="/all-residences" className="navbar-link">
+          Residences
+        </Link>
         <Link to="/register" className="navbar-link">
           Sign Up
         </Link>

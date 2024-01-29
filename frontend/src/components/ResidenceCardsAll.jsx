@@ -1,7 +1,4 @@
 import React, { useState } from "react";
-
-import ConfirmationDeleteModal from "./ConfirmationDeleteModal";
-import EditResidence from "./EditResidence";
 import {
   MDBAccordion,
   MDBAccordionItem,
@@ -16,16 +13,8 @@ import {
   MDBIcon,
 } from "mdb-react-ui-kit";
 
-const ResidenceCard = ({
+const ResidenceCardsAll = ({
   residence,
-  deleteResidence,
-  handleDeleteAlert,
-  fetchData,
-  show,
-  editMode,
-  finishEdit,
-  handleEditMode,
-  handleShow
 }) => {
   const { _id, name, category, description, image, price } = residence;
   // handle the confirmation delete modal
@@ -37,24 +26,6 @@ const ResidenceCard = ({
 
   return (
     <>
-      {/* {show && (
-        <ConfirmationDeleteModal
-          residence={residence}
-          show={show}
-          handleClose={handleClose}
-          deleteResidence={deleteResidence}
-        />
-      )}
-
-      {editMode && (
-        <EditResidence
-          show={editMode}
-          residence={residence}
-          finishEdit={finishEdit}
-          fetchData={fetchData}
-        />
-      )} */}
-
       <MDBCard className="mb-4" style={{height:"540px"}}>
         
         <MDBCardImage
@@ -99,15 +70,6 @@ const ResidenceCard = ({
         <MDBCardFooter style={{display:"flex", justifyContent:"space-between"}}>
           <small className="text-muted">{category}</small>
           <div className="exercise-actions">
-        <MDBBtn tag="a"
-          onClick={() => handleEditMode(residence)} color='none' style={{ color: '#d8dfeb' }}>
-            <MDBIcon  fas icon="pen" />
-        </MDBBtn>
-        <MDBBtn
-          tag="a" className="ms-3" onClick={() => handleShow(_id)} color='none' style={{ color: '#d8dfeb' }}
-        >
-          <MDBIcon fas icon="trash" />
-        </MDBBtn>
       </div>
         </MDBCardFooter>
       </MDBCard>
@@ -140,4 +102,4 @@ const ResidenceCard = ({
   );
 };
 
-export default ResidenceCard;
+export default ResidenceCardsAll;
