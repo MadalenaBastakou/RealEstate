@@ -48,7 +48,11 @@ const navigate = useNavigate()
   const toggleOpen = () => setIsOpen(!isOpen);
 
   const handleFavorite = async () => {
-    setFavouriteRes(prev => !prev)
+    if(Object.keys(cookie).length !== 0) {
+      setFavouriteRes(prev => !prev)
+    } else {
+      navigate('/login')
+    }
   };
 
   return (

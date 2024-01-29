@@ -1,7 +1,7 @@
 import { Residence } from "../models/Residence.js";
 
 const add = async (req, res) => {
-  const { name, price, category, description, image, location } = req.body;
+  const { name, price, category, description, image, location, favoriteBy } = req.body;
   if (!name || !price || !category || !description || !image || !location) {
     return res.status(400).json({ msg: "Please enter all the fields" });
   }
@@ -13,6 +13,7 @@ const add = async (req, res) => {
       description,
       location,
       image,
+      favoriteBy,
       user: req.user._id,
     });
     return res.status(200).json({ added: true });
@@ -35,32 +36,6 @@ const fetchAll = async (req, res) => {
 const fetchAllResidences = async (req, res) => {
   try {
     const residence = await Residence.find({});
-    return res.json(residence);
-  } catch (err) {
-    console.log(err);
-    return res.json(err);
-  }
-};
-
-const fetchForRent = async (req, res) => {
-  try {
-    const residence = await Residence.find({
-      category: "forRent",
-     
-    });
-    return res.json(residence);
-  } catch (err) {
-    console.log(err);
-    return res.json(err);
-  }
-};
-
-const fetchForSale = async (req, res) => {
-  try {
-    const residence = await Residence.find({
-      category: "forSale",
-     
-    });
     return res.json(residence);
   } catch (err) {
     console.log(err);
@@ -110,8 +85,6 @@ export default {
   fetchAll,
   fetchAllResidences,
   fetchOne,
-  fetchForRent,
-  fetchForSale,
   updateResidence,
   deleteResidence,
 };

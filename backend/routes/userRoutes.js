@@ -14,4 +14,5 @@ userRouter.get("/verify", verifyUser, userController.verify);
 userRouter.get("/logout", userController.logout);
 
 userRouter.get("/users/:id", userController.fetchUser);
+
 export { userRouter };
