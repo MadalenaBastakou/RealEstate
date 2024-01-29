@@ -15,6 +15,7 @@ import ForRent from "./components/ForRent";
 import AddResidence from "./components/AddResidence";
 import RequireAuth from "./components/RequireAuth";
 import AllResidences from "./components/AllResidences";
+import Favorites from "./components/Favorites";
 
 function App() {
 
@@ -27,6 +28,7 @@ function App() {
         <Route path="/login" element={<Login />} />
         <Route path="/" element={<Home />} />
         <Route path="/addresidence" element={<RequireAuth><AddResidence /></RequireAuth>} />
+        <Route path="/favorites" element={<RequireAuth><Favorites /></RequireAuth>} />
         <Route path="/residences" element={<RequireAuth><Residences /></RequireAuth>} />
         <Route path="/forSale" element={<ForSale />} />
         <Route path="/forRent" element={<ForRent />} />

@@ -218,9 +218,9 @@ const EditResidence = ({
                   <MDBRadio
                     onChange={(e) => setCategory(e.target.value)}
                     id="inlineRadio1"
-                    value="forRent"
+                    value="for Rent"
                     name="category"
-                    checked={category === "forRent" ? true : false}
+                    checked={category === "for Rent" ? true : false}
                     label="For Rent"
                     inline
                   />
@@ -231,7 +231,7 @@ const EditResidence = ({
                     id="inlineRadio2"
                     name="category"
                     value="for Sale"
-                    checked={category === "forSale" ? true : false}
+                    checked={category === "for Sale" ? true : false}
                     label="For Sale"
                     inline
                   />

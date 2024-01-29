@@ -35,7 +35,6 @@ const [deleteId, setDeleteId] = useState()
     axios
       .get("http://localhost:3001/residences", { withCredentials: true })
       .then(({ data }) => {
-        console.log(data);
         setResidences(data);
       });
   };
