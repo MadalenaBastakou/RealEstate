@@ -52,6 +52,7 @@ const login = async (req, res) => {
   }
 };
 
+
 const verify = (req, res) => {
   try {
     return res.json({ login: true });
@@ -65,4 +66,13 @@ const logout = (req, res) => {
   return res.json({ logout: true });
 };
 
-export default { register, login, verify, logout };
+const fetchUser = async (req,res) => {
+  try {
+    const id = req.params.id;
+    const user = await User.findOne({ _id: id});
+    return res.json(user);
+  } catch (err) {
+    return res.json(err);
+  }
+}
+export default { register, login, fetchUser, verify, logout };

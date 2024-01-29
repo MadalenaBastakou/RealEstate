@@ -10,10 +10,10 @@ residenceRouter.post("/add", verifyUser, residenceController.add);
 residenceRouter.get("/", verifyUser, residenceController.fetchAll);
 // fetch all the residences of all registered users
 residenceRouter.get("/all", residenceController.fetchAllResidences);
-residenceRouter.get("/forRent", verifyUser, residenceController.fetchForRent);
-residenceRouter.get("/forSale", verifyUser, residenceController.fetchForSale);
+residenceRouter.get("/forRent", residenceController.fetchForRent);
+residenceRouter.get("/forSale", residenceController.fetchForSale);
+residenceRouter.get("/:id", residenceController.fetchOne);
 
-residenceRouter.get("/:id", verifyUser, residenceController.fetchOne);
 
 residenceRouter.put("/:id", verifyUser, residenceController.updateResidence);
 

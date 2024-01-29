@@ -27,7 +27,7 @@ const ResidenceCard = ({
   handleEditMode,
   handleShow
 }) => {
-  const { _id, name, category, description, image, price } = residence;
+  const { _id, name, category, description, image, price, location } = residence;
   // handle the confirmation delete modal
   // const [show, setShow] = useState(false);
   // const handleClose = () => setShow(false);
@@ -55,14 +55,15 @@ const ResidenceCard = ({
         />
       )} */}
 
-      <MDBCard className="mb-4" style={{height:"540px"}}>
-        
+<MDBCard className="mb-4" style={{height:"600px"}}>
+      <div style={{ height: "100%", display: "flex", flexDirection: "column" }}>
+          <div style={{ position: "relative", flex: "1" }}>
         <MDBCardImage
           overlay
           src={image}
           alt={name}
           position="top"
-          style={{ height: "300px" }}
+          style={{ position: "absolute", width: "100%", height: "100%", objectFit: "cover" }}
         />
         <MDBCardOverlay
           style={{
@@ -84,18 +85,25 @@ const ResidenceCard = ({
             {price} €
           </div>
         </MDBCardOverlay>
-        <MDBCardBody style={{ height: "auto" }}>
+</div>
+<MDBCardBody style={{ flex: "1", display: "flex", flexDirection: "column", justifyContent: "space-between" }}>
           <MDBCardTitle style={{ fontSize: "1.3rem", fontWeight: "900" }}>
             {name}
           </MDBCardTitle>
+          <hr style={{  position:"absolute", top:"375px", left:0, width:"100%", color:"#8e9096" }} />
           <MDBCardText>
-            <MDBAccordion flush>
-              <MDBAccordionItem collapseId={1} headerTitle="Description">
+            <MDBAccordion flush  >
+              <MDBAccordionItem collapseId={1} headerTitle="Description" style={{  backgroundColor:"white", position:"absolute", top:"400px"}}>
                 {description}
               </MDBAccordionItem>
             </MDBAccordion>
+            
           </MDBCardText>
+          <MDBCardText className="text-muted small"  >
+            <MDBIcon fas icon="map-marker-alt" /> {location}
+            </MDBCardText>
         </MDBCardBody>
+        </div>
         <MDBCardFooter style={{display:"flex", justifyContent:"space-between"}}>
           <small className="text-muted">{category}</small>
           <div className="exercise-actions">
