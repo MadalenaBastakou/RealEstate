@@ -14,23 +14,25 @@ import ForRent from "./components/ForRent";
 // import DeleteResidence from "./components/DeleteResidence";
 import AddResidence from "./components/AddResidence";
 import RequireAuth from "./components/RequireAuth";
+import AllResidences from "./components/AllResidences";
 
 function App() {
-  
+
   return (
     <BrowserRouter>
-    <Navbar/>
-    <Routes>
-      <Route path="/register" element={<SignUp/>}/>
-      <Route path="/login" element={<Login/>}/>
-      <Route path="/" element={<RequireAuth><Home /></RequireAuth>}/>
-      <Route path="/addresidence" element={<RequireAuth><AddResidence /></RequireAuth>}/>
-      <Route path="/residences" element={<RequireAuth><Residences /></RequireAuth>}/>
-      <Route path="/forSale" element={<RequireAuth><ForSale /></RequireAuth>}/>
-      <Route path="/forRent" element={<RequireAuth><ForRent /></RequireAuth>}/>
-      <Route path="/logout" element={<Logout />}></Route>
-    </Routes>
-    {/* <Footer/> */}
+      <Navbar />
+      <Routes>
+        <Route path="/all-residences" element={<AllResidences />} />
+        <Route path="/register" element={<SignUp />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/" element={<Home />} />
+        <Route path="/addresidence" element={<RequireAuth><AddResidence /></RequireAuth>} />
+        <Route path="/residences" element={<RequireAuth><Residences /></RequireAuth>} />
+        <Route path="/forSale" element={<ForSale />} />
+        <Route path="/forRent" element={<ForRent />} />
+        <Route path="/logout" element={<Logout />}></Route>
+      </Routes>
+      {/* <Footer/> */}
     </BrowserRouter>
   )
 }
