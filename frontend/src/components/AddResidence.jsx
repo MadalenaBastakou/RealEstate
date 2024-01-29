@@ -17,6 +17,7 @@ import {
   MDBIcon,
 } from "mdb-react-ui-kit";
 import toast, { Toaster } from "react-hot-toast";
+import AddLocation from "./AddLocation"
 
 
 function AddResidence() {
@@ -25,6 +26,7 @@ function AddResidence() {
     description: "",
     category: "",
     price: "",
+    location:"",
     image: "",
   });
 
@@ -33,7 +35,7 @@ function AddResidence() {
   const [show, setShow] = useState(false);
   const [error, setError] = useState("");
 
-  const navigate = useNavigate();
+  const navigate = useNavigate()
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -98,6 +100,10 @@ function AddResidence() {
     }
   };
 
+  const setLocation = (locationName) => {
+    setResidence({...residence, location: locationName})
+  }
+
   return (
     <MDBContainer fluid>
     
@@ -157,7 +163,7 @@ function AddResidence() {
                     id="form2"
                     name="price"
                     value={residence.price}
-                    type="text"
+                    type="number"
                     onChange={handleChange}
                   />
                   <div className="small text-muted mt-2">
@@ -167,6 +173,7 @@ function AddResidence() {
               </MDBRow>
 
               <hr className="mx-n3" />
+             <AddLocation residence={residence} setLocation={setLocation}/>
               <MDBRow className="align-items-center pt-4 pb-3">
                 <MDBCol md="3" className="ps-5">
                   <h6 className="mb-0">Category</h6>

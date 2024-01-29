@@ -11,7 +11,8 @@ const ForRent = () => {
   }, []);
 
   const fetchData = async () => {
-   const res = await axios.get("http://localhost:3001/residences/forRent", { withCredentials: true })
+   const res = await axios.get("http://localhost:3001/residences/forRent")
+   console.log(res.data);
   setResForRent(res.data);
   }
 

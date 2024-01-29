@@ -16,6 +16,7 @@ import {
   MDBFile,
   MDBRadio,
 } from "mdb-react-ui-kit";
+import AddLocation from "./AddLocation"
 
 const EditResidence = ({
   residence,
@@ -29,12 +30,16 @@ const EditResidence = ({
   const [price, setPrice] = useState(residenceToUpdate.price);
   const [description, setDescription] = useState(residenceToUpdate.description);
   const [category, setCategory] = useState(residenceToUpdate.category);
+  const [location, setLocation] = useState(residenceToUpdate.location);
   const [imageUrl, setImageUrl] = useState("");
   const navigate = useNavigate();
   const { id } = useParams();
   const [file, setFile] = useState();
   const [loading, setLoading] = useState(false);
   const [loadTime, setLoadTime] = useState(0);
+  const [locationQuery, setLocationQuery] = useState("");
+  const [suggestions, setSuggestions] = useState([]);
+  const [showSuggestions, setShowSuggestions] = useState(false)
 
   useEffect(() => {
     axios
@@ -45,6 +50,8 @@ const EditResidence = ({
         setName(res.data.name);
         setPrice(res.data.price);
         setDescription(res.data.description);
+        setCategory(res.data.category);
+        setLocationQuery(res.data.location);
         setImageUrl(res.data.image);
       })
       .catch((err) => console.log(err));
@@ -84,6 +91,7 @@ const EditResidence = ({
           price: price,
           description: description,
           category: category,
+          location:location,
           image: imageUrl,
         },
         { withCredentials: true }
@@ -99,7 +107,29 @@ const EditResidence = ({
       .catch((err) => console.log(err));
   };
 
-  console.log(residenceToUpdate);
+  const handleLocationChange = async (e) => {
+    const query = e.target.value;
+    setLocationQuery(query);
+    setShowSuggestions(true);
+
+    try {
+      const response = await axios.get(
+        `https://nominatim.openstreetmap.org/search?q=${query}&format=json&accept-language=en`,  { headers: { 'accept-language': 'en' } }
+      );
+      setSuggestions(response.data);
+    } catch (error) {
+      console.error("Error fetching location suggestions:", error);
+    }
+  };
+
+  const handleSelectLocation = (suggestion) => {
+    const country = suggestion.display_name.split(',').pop().trim();
+  const locationName = suggestion.name;
+    setLocation(`${locationName},${country}`)
+    setLocationQuery(`${locationName},${country}`)
+    setShowSuggestions(false);
+  };
+
 
   return (
     <MDBContainer fluid>
@@ -147,6 +177,39 @@ const EditResidence = ({
 
               <hr className="mx-n3" />
               <MDBRow className="align-items-center pt-4 pb-3">
+        <MDBCol md="3" className="ps-5">
+          <h6 className="mb-0">Location</h6>
+        </MDBCol>
+
+        <MDBCol md="9" className="pe-5">
+          <MDBInput
+            label="Enter location"
+            size="lg"
+            id="form2"
+            name="price"
+            value={locationQuery}
+            type="text"
+            onChange={handleLocationChange}
+          />
+         {showSuggestions && <ul style={{backgroundColor:"white", listStyleType:"none", boxShadow: "rgba(0, 0, 0, 0.16) 0px 1px 4px", margin:"0", paddingInline:"15px", paddingTop:"10px" }}>
+            {suggestions.map((suggestion) => (
+                <>
+              <li
+              className="mb-3"
+                key={suggestion.place_id}
+                onClick={() => handleSelectLocation(suggestion)}
+              >
+                {suggestion.display_name}
+              </li>
+              <hr />
+              </>
+            ))}
+          </ul>}
+        </MDBCol>
+      </MDBRow>
+
+      <hr className="mx-n3" />
+              <MDBRow className="align-items-center pt-4 pb-3">
                 <MDBCol md="3" className="ps-5">
                   <h6 className="mb-0">Category</h6>
                 </MDBCol>
@@ -155,8 +218,9 @@ const EditResidence = ({
                   <MDBRadio
                     onChange={(e) => setCategory(e.target.value)}
                     id="inlineRadio1"
-                    value="for Rent"
+                    value="forRent"
                     name="category"
+                    checked={category === "forRent" ? true : false}
                     label="For Rent"
                     inline
                   />
@@ -167,6 +231,7 @@ const EditResidence = ({
                     id="inlineRadio2"
                     name="category"
                     value="for Sale"
+                    checked={category === "forSale" ? true : false}
                     label="For Sale"
                     inline
                   />

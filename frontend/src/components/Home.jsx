@@ -14,19 +14,19 @@ const Home = () => {
           <button
             className="browse-button"
             onClick={() => {
-              navigate("/forRent");
+              navigate("/all-residences");
             }}
           >
-            For Rent
+            Get Started
           </button>
-          <button
+          {/* <button
             className="browse-button"
             onClick={() => {
               navigate("/forSale");
             }}
           >
             For Sale
-          </button>
+          </button> */}
         </div>
       </div>
     </div>

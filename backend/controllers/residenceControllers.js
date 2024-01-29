@@ -1,8 +1,8 @@
 import { Residence } from "../models/Residence.js";
 
 const add = async (req, res) => {
-  const { name, price, category, description, image } = req.body;
-  if (!name || !price || !category || !description || !image) {
+  const { name, price, category, description, image, location } = req.body;
+  if (!name || !price || !category || !description || !image || !location) {
     return res.status(400).json({ msg: "Please enter all the fields" });
   }
   try {
@@ -11,6 +11,7 @@ const add = async (req, res) => {
       price,
       category,
       description,
+      location,
       image,
       user: req.user._id,
     });
@@ -45,7 +46,7 @@ const fetchForRent = async (req, res) => {
   try {
     const residence = await Residence.find({
       category: "forRent",
-      user: req.user._id,
+     
     });
     return res.json(residence);
   } catch (err) {
@@ -58,7 +59,7 @@ const fetchForSale = async (req, res) => {
   try {
     const residence = await Residence.find({
       category: "forSale",
-      user: req.user._id,
+     
     });
     return res.json(residence);
   } catch (err) {
@@ -70,7 +71,7 @@ const fetchForSale = async (req, res) => {
 const fetchOne = async (req, res) => {
   try {
     const id = req.params.id;
-    const residence = await Residence.findById({ _id: id, user: req.user._id });
+    const residence = await Residence.findOne({ _id: id});
     return res.json(residence);
   } catch (err) {
     return res.json(err);

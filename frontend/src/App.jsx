@@ -25,11 +25,11 @@ function App() {
         <Route path="/all-residences" element={<AllResidences />} />
         <Route path="/register" element={<SignUp />} />
         <Route path="/login" element={<Login />} />
-        <Route path="/" element={<RequireAuth><Home /></RequireAuth>} />
+        <Route path="/" element={<Home />} />
         <Route path="/addresidence" element={<RequireAuth><AddResidence /></RequireAuth>} />
         <Route path="/residences" element={<RequireAuth><Residences /></RequireAuth>} />
-        <Route path="/forSale" element={<RequireAuth><ForSale /></RequireAuth>} />
-        <Route path="/forRent" element={<RequireAuth><ForRent /></RequireAuth>} />
+        <Route path="/forSale" element={<ForSale />} />
+        <Route path="/forRent" element={<ForRent />} />
         <Route path="/logout" element={<Logout />}></Route>
       </Routes>
       {/* <Footer/> */}
