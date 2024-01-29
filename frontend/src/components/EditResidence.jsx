@@ -40,7 +40,7 @@ const EditResidence = ({
   const [locationQuery, setLocationQuery] = useState("");
   const [suggestions, setSuggestions] = useState([]);
   const [showSuggestions, setShowSuggestions] = useState(false)
-
+  // get all the selected residence data before the user starts making any kind of change
   useEffect(() => {
     axios
       .get(`http://localhost:3001/residences/${residenceToUpdate._id}`, {
@@ -56,7 +56,7 @@ const EditResidence = ({
       })
       .catch((err) => console.log(err));
   }, []);
-
+  // image change handler
   const handleImage = async (e) => {
     const file = e.target.files[0];
     const formData = new FormData();
@@ -80,7 +80,7 @@ const EditResidence = ({
     }
     navigate("/residences");
   };
-
+  // updated residence data handler, request to the backend
   const handleSubmit = (e) => {
     e.preventDefault();
     axios
@@ -91,7 +91,7 @@ const EditResidence = ({
           price: price,
           description: description,
           category: category,
-          location:location,
+          location: location,
           image: imageUrl,
         },
         { withCredentials: true }
@@ -106,7 +106,7 @@ const EditResidence = ({
       })
       .catch((err) => console.log(err));
   };
-
+  // location changes handler
   const handleLocationChange = async (e) => {
     const query = e.target.value;
     setLocationQuery(query);
@@ -114,7 +114,7 @@ const EditResidence = ({
 
     try {
       const response = await axios.get(
-        `https://nominatim.openstreetmap.org/search?q=${query}&format=json&accept-language=en`,  { headers: { 'accept-language': 'en' } }
+        `https://nominatim.openstreetmap.org/search?q=${query}&format=json&accept-language=en`, { headers: { 'accept-language': 'en' } }
       );
       setSuggestions(response.data);
     } catch (error) {
@@ -124,7 +124,7 @@ const EditResidence = ({
 
   const handleSelectLocation = (suggestion) => {
     const country = suggestion.display_name.split(',').pop().trim();
-  const locationName = suggestion.name;
+    const locationName = suggestion.name;
     setLocation(`${locationName},${country}`)
     setLocationQuery(`${locationName},${country}`)
     setShowSuggestions(false);
@@ -177,38 +177,38 @@ const EditResidence = ({
 
               <hr className="mx-n3" />
               <MDBRow className="align-items-center pt-4 pb-3">
-        <MDBCol md="3" className="ps-5">
-          <h6 className="mb-0">Location</h6>
-        </MDBCol>
+                <MDBCol md="3" className="ps-5">
+                  <h6 className="mb-0">Location</h6>
+                </MDBCol>
 
-        <MDBCol md="9" className="pe-5">
-          <MDBInput
-            label="Enter location"
-            size="lg"
-            id="form2"
-            name="price"
-            value={locationQuery}
-            type="text"
-            onChange={handleLocationChange}
-          />
-         {showSuggestions && <ul style={{backgroundColor:"white", listStyleType:"none", boxShadow: "rgba(0, 0, 0, 0.16) 0px 1px 4px", margin:"0", paddingInline:"15px", paddingTop:"10px" }}>
-            {suggestions.map((suggestion) => (
-                <>
-              <li
-              className="mb-3"
-                key={suggestion.place_id}
-                onClick={() => handleSelectLocation(suggestion)}
-              >
-                {suggestion.display_name}
-              </li>
-              <hr />
-              </>
-            ))}
-          </ul>}
-        </MDBCol>
-      </MDBRow>
+                <MDBCol md="9" className="pe-5">
+                  <MDBInput
+                    label="Enter location"
+                    size="lg"
+                    id="form2"
+                    name="price"
+                    value={locationQuery}
+                    type="text"
+                    onChange={handleLocationChange}
+                  />
+                  {showSuggestions && <ul style={{ backgroundColor: "white", listStyleType: "none", boxShadow: "rgba(0, 0, 0, 0.16) 0px 1px 4px", margin: "0", paddingInline: "15px", paddingTop: "10px" }}>
+                    {suggestions.map((suggestion) => (
+                      <>
+                        <li
+                          className="mb-3"
+                          key={suggestion.place_id}
+                          onClick={() => handleSelectLocation(suggestion)}
+                        >
+                          {suggestion.display_name}
+                        </li>
+                        <hr />
+                      </>
+                    ))}
+                  </ul>}
+                </MDBCol>
+              </MDBRow>
 
-      <hr className="mx-n3" />
+              <hr className="mx-n3" />
               <MDBRow className="align-items-center pt-4 pb-3">
                 <MDBCol md="3" className="ps-5">
                   <h6 className="mb-0">Category</h6>

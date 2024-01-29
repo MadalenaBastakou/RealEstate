@@ -1,5 +1,5 @@
 import React from 'react';
-
+// favorite residences display
 function Favorites() {
   return (
     <>
