@@ -28,6 +28,7 @@ function AddResidence() {
     price: "",
     location:"",
     image: "",
+    favourite: false
   });
 
   const [loading, setLoading] = useState(false);
@@ -74,8 +75,6 @@ function AddResidence() {
     }
     setResidence({ ...residence, [name]: value });
   };
-
-  console.log(residence);
 
   const handleImage = async (e) => {
     setShow(false);
@@ -183,7 +182,7 @@ function AddResidence() {
                   <MDBRadio
                     onChange={handleChange}
                     id="inlineRadio1"
-                    value="forRent"
+                    value="for Rent"
                     name="category"
                     label="For Rent"
                     inline
@@ -193,7 +192,7 @@ function AddResidence() {
                     onChange={handleChange}
                     id="inlineRadio2"
                     name="category"
-                    value="forSale"
+                    value="for Sale"
                     label="For Sale"
                     inline
                   />
