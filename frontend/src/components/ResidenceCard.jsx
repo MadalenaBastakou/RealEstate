@@ -14,6 +14,7 @@ import {
 } from "mdb-react-ui-kit";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import { useCookies } from "react-cookie";
 
 const ResidenceCard = ({
   residence,
@@ -31,11 +32,16 @@ const ResidenceCard = ({
     
   const [favouriteRes, setFavouriteRes] = useState();
   const [currentUser, setCurrentUser] = useState(null);
+  const [cookie, setCookie, removeCookie] = useCookies()
 
 const navigate = useNavigate()
 
   const handleFavorite = async () => {
-    setFavouriteRes(prev => !favouriteRes)
+    if(Object.keys(cookie).length !== 0) {
+      setFavouriteRes(prev => !prev)
+    } else {
+      navigate('/login')
+    }
   };
 
   return (

@@ -5,7 +5,7 @@ import validator from "validator";
 
 const register = async (req, res) => {
   try {
-    const { username, email, password } = req.body;
+    const { username, email, password, favorites } = req.body;
     
     if (!username || !password || !email) {
       return res.status(400).json({ msg: "Please enter all the fields" });
@@ -22,7 +22,7 @@ const register = async (req, res) => {
     }
 
     const hashPassword = await bcrypt.hash(password, 10);
-    await User.create({ username, email, password: hashPassword });
+    await User.create({ username, email, password: hashPassword, favorites });
 
     return res.status(200).json({ msg: "User created successfully" });
   } catch (err) {
@@ -75,4 +75,21 @@ const fetchUser = async (req,res) => {
     return res.json(err);
   }
 }
-export default { register, login, fetchUser, verify, logout };
+
+const updateUser = async (req, res) => {
+  try {
+    const id = req.params.id;
+    const user = await User.findOneAndUpdate(
+      { _id: id},
+      req.body,
+      { new: true }
+    );
+    return res.json({ updated: true, user });
+  } catch (err) {
+    return res.json(err);
+  }
+};
+
+
+
+export default { register, login, fetchUser, updateUser, verify, logout };
