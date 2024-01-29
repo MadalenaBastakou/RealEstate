@@ -18,12 +18,21 @@ import {
   MDBCollapse,
 } from "mdb-react-ui-kit";
 import axios from "axios";
+import "../css/Residences.css";
+import { useCookies } from "react-cookie";
+import { useNavigate } from "react-router-dom";
 
 const ResidenceCardsAll = ({ residence }) => {
   const { _id, name, category, description, image, price, location } =
     residence;
   const [contactEmail, setContactEmail] = useState("");
   const [isOpen, setIsOpen] = useState(false);
+  const [favouriteRes, setFavouriteRes] = useState();
+  const [currentUser, setCurrentUser] = useState(null);
+  const [cookie, setCookie, removeCookie] = useCookies()
+  const [userLoggedIn, setUserLoggedIn] = useState((Object.keys(cookie).length !== 0) ? true : false)
+
+const navigate = useNavigate()
 
   const handleContact = async (residence) => {
     const res = await axios.get(
@@ -37,6 +46,10 @@ const ResidenceCardsAll = ({ residence }) => {
   };
 
   const toggleOpen = () => setIsOpen(!isOpen);
+
+  const handleFavorite = async () => {
+    setFavouriteRes(prev => !prev)
+  };
 
   return (
     <>
@@ -64,17 +77,38 @@ const ResidenceCardsAll = ({ residence }) => {
                 fontSize: "1.3rem",
                 fontWeight: "900",
                 textAlign: "right",
+                display: "flex",
+                justifyContent: "space-between",
               }}
             >
-              <div
-                style={{
-                  backgroundColor: "white",
-                  textAlign: "center",
-                  display: "inline",
-                  padding: "8px",
-                }}
-              >
-                {price} €
+              <div style={{ cursor: "pointer" }}>
+                {favouriteRes ? (
+                  <MDBIcon
+                    fas
+                    icon="heart"
+                    style={{ color: "white" }}
+                    onClick={handleFavorite}
+                  />
+                ) : (
+                  <MDBIcon
+                    far
+                    icon="heart"
+                    style={{ color: "white" }}
+                    onClick={handleFavorite}
+                  />
+                )}
+              </div>
+              <div>
+                <div
+                  style={{
+                    backgroundColor: "white",
+                    textAlign: "center",
+                    display: "inline",
+                    padding: "8px",
+                  }}
+                >
+                  {price} €
+                </div>
               </div>
             </MDBCardOverlay>
           </div>
@@ -130,34 +164,12 @@ const ResidenceCardsAll = ({ residence }) => {
               <MDBIcon
                 tag="a"
                 color="none"
+                className="hover"
                 style={{ color: "#757575" }}
                 fas
                 icon="envelope"
               />
             </div>
-            {/* <div style={{ backgroundColor:"none", cursor: "pointer" }}>
-              <MDBPopover
-                style={{ backgroundColor: "none", border: "none" }}
-                size="lg"
-                color="none"
-                placement="right"
-                btnChildren={
-                  <MDBIcon
-                    tag="a"
-                    onClick={() => handleContact(residence)}
-                    color="none"
-                    style={{ backgroundColor: "none", color: "#d8dfeb", padding: 0 }}
-                    fas
-                    icon="envelope"
-                  />
-                }
-              >
-                <MDBPopoverHeader text="secondary small">
-                  Contact email
-                </MDBPopoverHeader>
-                <MDBPopoverBody>{contactEmail}</MDBPopoverBody>
-              </MDBPopover>
-            </div> */}
           </div>
         </MDBCardFooter>
         <MDBCollapse
