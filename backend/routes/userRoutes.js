@@ -8,7 +8,6 @@ const userRouter = express.Router();
 userRouter.post("/register", userController.register);
 // user's login request
 userRouter.post("/login", userController.login);
-
 // user's verification request
 userRouter.get("/verify", verifyUser, userController.verify);
 // logout the user

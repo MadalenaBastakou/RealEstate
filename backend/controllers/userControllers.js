@@ -1,4 +1,5 @@
 import { User } from "../models/User.js";
+import { Residence } from "../models/Residence.js";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 import validator from "validator";
@@ -93,5 +94,6 @@ const updateUser = async (req, res) => {
     return res.json(err);
   }
 };
+
 
 export default { register, login, fetchUser, updateUser, verify, logout };

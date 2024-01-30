@@ -13,7 +13,6 @@ residenceRouter.get("/", verifyUser, residenceController.fetchAll);
 residenceRouter.get("/all", residenceController.fetchAllResidences);
 // fetch the user's selected residence
 residenceRouter.get("/:id", residenceController.fetchOne);
-
 // update the user's selected residence
 residenceRouter.put("/:id", verifyUser, residenceController.updateResidence);
 // delete the user's selected residence

@@ -29,10 +29,11 @@ const AllResidences = () => {
     axios
       .get("http://localhost:3001/residences/all")
       .then(({ data }) => {
-        console.log(data);
         setResidences(data);
       });
   };
+
+  
 
   return (
     <MDBContainer>
