@@ -7,6 +7,7 @@ const residenceSchema = new mongoose.Schema({
   price: { type: String, required: true },
   location: { type: String, required: true },
   description: { type: String, required: true },
+  favoriteBy: [{ type: mongoose.Schema.Types.ObjectId, ref: 'User' }],
   image: {
     type: String,
     required: true,

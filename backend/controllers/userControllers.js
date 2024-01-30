@@ -1,12 +1,14 @@
 import { User } from "../models/User.js";
+import { Residence } from "../models/Residence.js";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 import validator from "validator";
 
+// new user registration
 const register = async (req, res) => {
   try {
     const { username, email, password, favorites } = req.body;
-    
+
     if (!username || !password || !email) {
       return res.status(400).json({ msg: "Please enter all the fields" });
     }
@@ -17,8 +19,10 @@ const register = async (req, res) => {
     if (user) {
       return res.status(400).json({ msg: "User is registered" });
     }
-    if(password.length < 6){
-      return res.status(400).json({ msg: "Password should be at least 6 characters" });
+    if (password.length < 6) {
+      return res
+        .status(400)
+        .json({ msg: "Password should be at least 6 characters" });
     }
 
     const hashPassword = await bcrypt.hash(password, 10);
@@ -30,6 +34,7 @@ const register = async (req, res) => {
   }
 };
 
+// login a registered user
 const login = async (req, res) => {
   try {
     const { username, password } = req.body;
@@ -52,7 +57,6 @@ const login = async (req, res) => {
   }
 };
 
-
 const verify = (req, res) => {
   try {
     return res.json({ login: true });
@@ -61,35 +65,35 @@ const verify = (req, res) => {
   }
 };
 
+// logout the user and remove the cookie
 const logout = (req, res) => {
   res.clearCookie("token");
   return res.json({ logout: true });
 };
 
-const fetchUser = async (req,res) => {
+// get the user by his/her id
+const fetchUser = async (req, res) => {
   try {
     const id = req.params.id;
-    const user = await User.findOne({ _id: id});
+    const user = await User.findOne({ _id: id });
     return res.json(user);
-  } catch (err) {
-    return res.json(err);
-  }
-}
-
-const updateUser = async (req, res) => {
-  try {
-    const id = req.params.id;
-    const user = await User.findOneAndUpdate(
-      { _id: id},
-      req.body,
-      { new: true }
-    );
-    return res.json({ updated: true, user });
   } catch (err) {
     return res.json(err);
   }
 };
 
+// update the user's data
+const updateUser = async (req, res) => {
+  try {
+    const id = req.params.id;
+    const user = await User.findOneAndUpdate({ _id: id }, req.body, {
+      new: true,
+    });
+    return res.json({ updated: true, user });
+  } catch (err) {
+    return res.json(err);
+  }
+};
 
 
 export default { register, login, fetchUser, updateUser, verify, logout };

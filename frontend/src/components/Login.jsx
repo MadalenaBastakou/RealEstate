@@ -1,65 +1,4 @@
-// import React, { useState } from "react";
-// import { useNavigate } from "react-router-dom";
-// import "../css/Login.css";
-// import axios from "axios";
 
-// const Login = () => {
-//   const [user, setUser] = useState({
-//     username: "",
-//     password: ""
-//   })
-
-//   const navigate = useNavigate();
-
-//   const handleInput = (e) => {
-//     const {name, value} = e.target
-//     setUser((prevUser )=> ({...prevUser, [name]: value}))
-//   }
-
-//   const handleSubmit = async () => {
-//     try{
-//       const res = await axios.post("http://localhost:3001/login", user, {withCredentials:true})
-//       if(res.status === 200) {
-//        navigate("/");
-//       }
-//     } catch(err) {
-//       console.error("Login failed", err)
-//     }
-//   };
-
-//   return (
-//     <div className="login-page">
-//       <div className="login-container">
-//         <h2>Login</h2>
-//         <div className="form-group">
-//           <label htmlFor="username">Username :</label>
-//           <input
-//             type="text"
-//             placeholder="Enter Username"
-//             name="username"
-//             value={user.username}
-//             onChange={handleInput}
-//           />
-//         </div>
-//         <div className="form-group">
-//           <label htmlFor="password">Password :</label>
-//           <input
-//             type="password"
-//             placeholder="Enter Password"
-//             name="password"
-//             value={user.password}
-//             onChange={handleInput}
-//           />
-//         </div>
-//         <button className="btn-login" onClick={handleSubmit}>
-//           Login
-//         </button>
-//       </div>
-//     </div>
-//   );
-// };
-
-// export default Login;
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
@@ -85,13 +24,13 @@ function Login() {
   const [error, setError] = useState("");
 
   const navigate = useNavigate();
-
+  // save the user's input data to be sent to the backend
   const handleInput = (e) => {
     setShow(false)
     const { name, value } = e.target;
     setUser((prevUser) => ({ ...prevUser, [name]: value }));
   };
-
+  // request with the user's data sent to the backed
   const handleSubmit = async () => {
     try {
       const res = await axios.post("http://localhost:3001/login", user, {
@@ -148,18 +87,18 @@ function Login() {
               size="lg"
               onChange={handleInput}
             />
-           {show &&  <div
+            {show && <div
               className="mb-4"
               style={{
                 color: "red",
-                backgroundColor:"#f9e1e5",
+                backgroundColor: "#f9e1e5",
                 color: "#af233a",
-                borderRadius:"5px",
-                textAlign:"left",
-                padding:"0.8rem"
+                borderRadius: "5px",
+                textAlign: "left",
+                padding: "0.8rem"
               }}
             >
-             <MDBIcon fas icon="times" className="me-2"/>{error}
+              <MDBIcon fas icon="times" className="me-2" />{error}
             </div>}
             <div className="d-flex justify-content-flex-start text-left">
               <p>
@@ -167,7 +106,7 @@ function Login() {
                 <a
                   href="/register"
                   style={{
-             
+
                     color: "#2d9ee0",
                     fontFamily: "'Oswald', sans-serif",
                     fontWeight: "900",

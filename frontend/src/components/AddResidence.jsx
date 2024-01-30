@@ -19,7 +19,7 @@ import {
 import toast, { Toaster } from "react-hot-toast";
 import AddLocation from "./AddLocation"
 
-
+// new residence state
 function AddResidence() {
   const [residence, setResidence] = useState({
     name: "",
@@ -37,7 +37,7 @@ function AddResidence() {
   const [error, setError] = useState("");
 
   const navigate = useNavigate()
-
+// add new residence handler
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
@@ -58,7 +58,7 @@ function AddResidence() {
       setShow(true);
     }
   };
-
+// input verification
   const handleChange = (e) => {
     setShow(false);
     const { name, value } = e.target;
@@ -75,7 +75,7 @@ function AddResidence() {
     }
     setResidence({ ...residence, [name]: value });
   };
-
+// add image handler
   const handleImage = async (e) => {
     setShow(false);
     const file = e.target.files[0];
@@ -98,7 +98,7 @@ function AddResidence() {
       setLoading(false);
     }
   };
-
+// location handler
   const setLocation = (locationName) => {
     setResidence({...residence, location: locationName})
   }

@@ -34,13 +34,13 @@ const Navbar = () => {
           All Residences
         </Link>
         <div className="navbar-dropdown">
-            <div className="navbar-link navbar-dropdown" onClick={toggleDropdown}>
+            <div className="navbar-link navbar-dropdown" onMouseEnter={toggleDropdown} >
               <span>My Account</span>{" "}
               <MDBIcon icon={showDropdown ? 'caret-up' : 'caret-down'} />
             </div>
             {showDropdown && (
-              <div className="dropdown-content">
-                <Link to="/residences" className="dropdown-link">
+              <div className="dropdown-content" onMouseLeave={toggleDropdown}>
+                <Link to="/residences" className="dropdown-link" >
                   My Residences
                 </Link>
                 <Link to="/favorites" className="dropdown-link">

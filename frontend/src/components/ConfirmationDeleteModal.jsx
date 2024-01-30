@@ -11,6 +11,7 @@ import {
   } from 'mdb-react-ui-kit';
   import "../css/Residences.css";
 
+  // ask for the user's confirmation before finalizing the delete request
 function ConfirmationDeleteModal({residenceId, show, handleClose, deleteResidence,deleteId}) {
     return (
       <>
@@ -19,7 +20,7 @@ function ConfirmationDeleteModal({residenceId, show, handleClose, deleteResidenc
           <MDBModalContent>
             <MDBModalHeader>
               <MDBModalTitle>Delete a residence</MDBModalTitle>
-              <MDBBtn className='btn-close' color='none'onClick={handleClose}></MDBBtn>
+              <MDBBtn className='btn-close' color='none' onClick={handleClose}></MDBBtn>
             </MDBModalHeader>
             <MDBModalBody>Are you sure you want to delete this residence?</MDBModalBody>
 
