@@ -1,7 +1,8 @@
 import axios from "axios";
-import React, { useEffect } from "react";
+import  { useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 
+// delete the selected residence request
 const DeleteResidence = () => {
   const navigate = useNavigate();
   const { id } = useParams();

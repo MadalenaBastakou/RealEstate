@@ -17,15 +17,18 @@ import {
   MDBIcon,
 } from "mdb-react-ui-kit";
 import toast, { Toaster } from "react-hot-toast";
+import AddLocation from "./AddLocation"
 
-
+// new residence state
 function AddResidence() {
   const [residence, setResidence] = useState({
     name: "",
     description: "",
     category: "",
     price: "",
+    location:"",
     image: "",
+    favourite: false
   });
 
   const [loading, setLoading] = useState(false);
@@ -33,8 +36,8 @@ function AddResidence() {
   const [show, setShow] = useState(false);
   const [error, setError] = useState("");
 
-  const navigate = useNavigate();
-
+  const navigate = useNavigate()
+// add new residence handler
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
@@ -55,7 +58,7 @@ function AddResidence() {
       setShow(true);
     }
   };
-
+// input verification
   const handleChange = (e) => {
     setShow(false);
     const { name, value } = e.target;
@@ -72,9 +75,7 @@ function AddResidence() {
     }
     setResidence({ ...residence, [name]: value });
   };
-
-  console.log(residence);
-
+// add image handler
   const handleImage = async (e) => {
     setShow(false);
     const file = e.target.files[0];
@@ -97,6 +98,10 @@ function AddResidence() {
       setLoading(false);
     }
   };
+// location handler
+  const setLocation = (locationName) => {
+    setResidence({...residence, location: locationName})
+  }
 
   return (
     <MDBContainer fluid>
@@ -157,7 +162,7 @@ function AddResidence() {
                     id="form2"
                     name="price"
                     value={residence.price}
-                    type="text"
+                    type="number"
                     onChange={handleChange}
                   />
                   <div className="small text-muted mt-2">
@@ -167,6 +172,7 @@ function AddResidence() {
               </MDBRow>
 
               <hr className="mx-n3" />
+             <AddLocation residence={residence} setLocation={setLocation}/>
               <MDBRow className="align-items-center pt-4 pb-3">
                 <MDBCol md="3" className="ps-5">
                   <h6 className="mb-0">Category</h6>
@@ -176,7 +182,7 @@ function AddResidence() {
                   <MDBRadio
                     onChange={handleChange}
                     id="inlineRadio1"
-                    value="forRent"
+                    value="for Rent"
                     name="category"
                     label="For Rent"
                     inline
@@ -186,7 +192,7 @@ function AddResidence() {
                     onChange={handleChange}
                     id="inlineRadio2"
                     name="category"
-                    value="forSale"
+                    value="for Sale"
                     label="For Sale"
                     inline
                   />

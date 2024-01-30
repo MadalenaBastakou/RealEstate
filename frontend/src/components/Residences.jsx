@@ -59,8 +59,8 @@ const [deleteId, setDeleteId] = useState()
   };
 
   const handleEditMode = (residence) => {
-    setResidenceToUpdate(residence)
     setEditMode(true)
+    setResidenceToUpdate(residence)
   }
 
   const handleShow = (id) => {
@@ -89,7 +89,7 @@ const [deleteId, setDeleteId] = useState()
                  residenceToUpdate={residenceToUpdate}
                />
              )}
-      <MDBRow className='mt-3'>
+     {!editMode && <MDBRow className='mt-3'>
         <Toaster />
         {residences.map((residence, index) => {
           
@@ -110,7 +110,7 @@ const [deleteId, setDeleteId] = useState()
         </MDBCol>
           );
         })}
-        </MDBRow>
+        </MDBRow>}
         </MDBContainer>
    
   );
