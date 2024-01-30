@@ -27,12 +27,14 @@ const ResidenceCardsAll = ({ residence }) => {
     residence;
   const [contactEmail, setContactEmail] = useState("");
   const [isOpen, setIsOpen] = useState(false);
-  const [favouriteRes, setFavouriteRes] = useState();
+  const [favoriteState, setFavoriteState] = useState(false);
   const [currentUser, setCurrentUser] = useState(null);
-  const [cookie, setCookie, removeCookie] = useCookies()
-  const [userLoggedIn, setUserLoggedIn] = useState((Object.keys(cookie).length !== 0) ? true : false)
+  const [cookie, setCookie, removeCookie] = useCookies();
+  const [userLoggedIn, setUserLoggedIn] = useState(
+    Object.keys(cookie).length !== 0 ? true : false
+  );
 
-const navigate = useNavigate()
+  const navigate = useNavigate();
 
   const handleContact = async (residence) => {
     const res = await axios.get(
@@ -47,11 +49,12 @@ const navigate = useNavigate()
 
   const toggleOpen = () => setIsOpen(!isOpen);
 
-  const handleFavorite = async () => {
-    if(Object.keys(cookie).length !== 0) {
-      setFavouriteRes(prev => !prev)
-    } else {
-      navigate('/login')
+  const handleFavoriteState = () => {
+    if (Object.keys(cookie).length !== 0) {
+      setFavoriteState((prev) => !prev);
+    }else {
+      navigate("/login");
+
     }
   };
 
@@ -86,19 +89,19 @@ const navigate = useNavigate()
               }}
             >
               <div style={{ cursor: "pointer" }}>
-                {favouriteRes ? (
+                {favoriteState && userLoggedIn ? (
                   <MDBIcon
                     fas
                     icon="heart"
                     style={{ color: "white" }}
-                    onClick={handleFavorite}
+                    onClick={handleFavoriteState}
                   />
                 ) : (
                   <MDBIcon
                     far
                     icon="heart"
                     style={{ color: "white" }}
-                    onClick={handleFavorite}
+                    onClick={handleFavoriteState}
                   />
                 )}
               </div>
@@ -189,7 +192,7 @@ const navigate = useNavigate()
           {isOpen && (
             <>
               <span
-                backgroundColor="secondary"
+                // backgroundColor="secondary"
                 className="small mx-2 my-1"
                 style={{ color: "#878d8d" }}
               >

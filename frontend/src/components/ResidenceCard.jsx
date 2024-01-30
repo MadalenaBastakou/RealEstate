@@ -1,4 +1,4 @@
-import React, {  useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   MDBAccordion,
   MDBAccordionItem,
@@ -18,29 +18,23 @@ import { useCookies } from "react-cookie";
 
 const ResidenceCard = ({
   residence,
-  deleteResidence,
-  handleDeleteAlert,
-  fetchData,
-  show,
-  editMode,
-  finishEdit,
+  refetchFavorites,
   handleEditMode,
   handleShow,
 }) => {
   const { _id, name, category, description, image, price, location } =
     residence;
-    
-  const [favouriteRes, setFavouriteRes] = useState();
-  const [currentUser, setCurrentUser] = useState(null);
-  const [cookie, setCookie, removeCookie] = useCookies()
+  const [favoriteState, setFavoriteState] = useState(false);
+  // const [currentUser, setCurrentUser] = useState(null);
+  const [cookie] = useCookies();
 
-const navigate = useNavigate()
+  const navigate = useNavigate();
 
-  const handleFavorite = async () => {
-    if(Object.keys(cookie).length !== 0) {
-      setFavouriteRes(prev => !prev)
+  const handleFavoriteState = async () => {
+    if (Object.keys(cookie).length !== 0) {
+      setFavoriteState((prev) => !prev);
     } else {
-      navigate('/login')
+      navigate("/login");
     }
   };
 
@@ -75,19 +69,19 @@ const navigate = useNavigate()
               }}
             >
               <div style={{ cursor: "pointer" }}>
-                {favouriteRes ? (
+                {favoriteState ? (
                   <MDBIcon
                     fas
                     icon="heart"
                     style={{ color: "white" }}
-                    onClick={handleFavorite}
+                    onClick={handleFavoriteState}
                   />
                 ) : (
                   <MDBIcon
                     far
                     icon="heart"
                     style={{ color: "white" }}
-                    onClick={handleFavorite}
+                    onClick={handleFavoriteState}
                   />
                 )}
               </div>
@@ -135,18 +129,10 @@ const navigate = useNavigate()
                     backgroundColor: "white",
                     position: "absolute",
                     top: "400px",
+                    zIndex:"2"
                   }}
                 >
-                  <span
-                    style={{
-                      color: "black",
-                      backgroundColor: "white",
-                      textDecoration: "none",
-                    }}
-                  >
-                    {" "}
-                    {description}
-                  </span>
+                  {description}
                 </MDBAccordionItem>
               </MDBAccordion>
             </MDBCardText>
