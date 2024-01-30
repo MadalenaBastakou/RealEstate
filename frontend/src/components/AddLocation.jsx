@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import axios from "axios";
 import { MDBCol, MDBInput, MDBRow } from "mdb-react-ui-kit";
 
+// add residence location handler
 const AddResidence = ({setLocation, residence}) => {
   const [locationQuery, setLocationQuery] = useState("");
   const [suggestions, setSuggestions] = useState([]);
