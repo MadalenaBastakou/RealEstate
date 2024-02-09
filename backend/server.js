@@ -22,7 +22,12 @@ app.use(express.json());
 app.use(cookieParser());
 app.use(bodyParser.json({ limit: "50mb" }));
 app.use(bodyParser.urlencoded({ limit: "50mb", extended: true }));
-app.use(cors({ origin: ["http://localhost:3000"], credentials: true }));
+app.use(
+  cors({
+    origin: ["https://real-estate-l3zq.onrender.com", "http://localhost:3000"],
+    credentials: true,
+  })
+);
 
 app.post("/upload", upload.single("image"), (req, res) => {
   res.send(req.file);
