@@ -14,7 +14,6 @@ const Navbar = () => {
   const handleLogout = async () => {
     const res = await axios.get("http://localhost:3001/logout")
     removeCookie('token', { path: '/' });
-    console.log(res);
   }
 
   const toggleDropdown = () => {

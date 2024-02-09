@@ -29,9 +29,6 @@ if (loggedIn === null) {
   return <div>Loading...</div>;
 }
 
-// if (loggedIn === false) {
-//   navigate("/login");
-// }
 
 return <div>{props.children}</div>;
 }
