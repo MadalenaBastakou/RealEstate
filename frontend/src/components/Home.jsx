@@ -19,14 +19,6 @@ const Home = () => {
           >
             Get Started
           </button>
-          {/* <button
-            className="browse-button"
-            onClick={() => {
-              navigate("/forSale");
-            }}
-          >
-            For Sale
-          </button> */}
         </div>
       </div>
     </div>

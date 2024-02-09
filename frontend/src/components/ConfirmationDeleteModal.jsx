@@ -33,21 +33,6 @@ function ConfirmationDeleteModal({residenceId, show, handleClose, deleteResidenc
           </MDBModalContent>
         </MDBModalDialog>
       </MDBModal>
-        {/* <MDBModal id="modal" open={show} onHide={handleClose}>
-            <MDBModalHeader closeButton >
-              <MDBModalTitle>Delete a residence</MDBModalTitle>
-              <MDBBtn className='btn-close' color='none' onClick={handleClose}></MDBBtn>
-            </MDBModalHeader>
-            <MDBModalBody>Are you sure you want to delete this residence?</MDBModalBody>
-            <MDBModalFooter>
-              <MDBBtn color="secondary" style={{backgroundColor: "#FF725E", color:"white"}} onClick={() => deleteResidence(deleteId)}>
-                Yes
-              </MDBBtn>
-              <MDBBtn color="secondary" style={{ color:"white"}} onClick={handleClose}>
-                No
-              </MDBBtn>
-            </MDBModalFooter>
-          </MDBModal> */}
       </>
     );
   }

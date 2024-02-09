@@ -64,27 +64,8 @@ const ResidenceCard = ({
                 fontSize: "1.3rem",
                 fontWeight: "900",
                 textAlign: "right",
-                display: "flex",
-                justifyContent: "space-between",
               }}
             >
-              <div style={{ cursor: "pointer" }}>
-                {favoriteState ? (
-                  <MDBIcon
-                    fas
-                    icon="heart"
-                    style={{ color: "white" }}
-                    onClick={handleFavoriteState}
-                  />
-                ) : (
-                  <MDBIcon
-                    far
-                    icon="heart"
-                    style={{ color: "white" }}
-                    onClick={handleFavoriteState}
-                  />
-                )}
-              </div>
               <div>
                 <div
                   style={{

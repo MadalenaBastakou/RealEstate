@@ -1,9 +1,7 @@
 import React, { useState } from "react";
 import {
   MDBAccordion,
-  MDBDrawer,
   MDBAccordionItem,
-  MDBBtn,
   MDBCard,
   MDBCardBody,
   MDBCardFooter,
@@ -12,9 +10,6 @@ import {
   MDBCardText,
   MDBCardTitle,
   MDBIcon,
-  MDBPopover,
-  MDBPopoverBody,
-  MDBPopoverHeader,
   MDBCollapse,
 } from "mdb-react-ui-kit";
 import axios from "axios";
@@ -84,27 +79,8 @@ const ResidenceCardsAll = ({ residence }) => {
                 fontSize: "1.3rem",
                 fontWeight: "900",
                 textAlign: "right",
-                display: "flex",
-                justifyContent: "space-between",
               }}
             >
-              <div style={{ cursor: "pointer" }}>
-                {favoriteState && userLoggedIn ? (
-                  <MDBIcon
-                    fas
-                    icon="heart"
-                    style={{ color: "white" }}
-                    onClick={handleFavoriteState}
-                  />
-                ) : (
-                  <MDBIcon
-                    far
-                    icon="heart"
-                    style={{ color: "white" }}
-                    onClick={handleFavoriteState}
-                  />
-                )}
-              </div>
               <div>
                 <div
                   style={{

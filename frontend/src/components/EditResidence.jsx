@@ -16,7 +16,6 @@ import {
   MDBFile,
   MDBRadio,
 } from "mdb-react-ui-kit";
-import AddLocation from "./AddLocation"
 
 const EditResidence = ({
   residence,

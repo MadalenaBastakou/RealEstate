@@ -16,7 +16,6 @@ const AddResidence = ({setLocation, residence}) => {
       const response = await axios.get(
         `https://nominatim.openstreetmap.org/search?q=${query}&format=json&accept-language=en`,  { headers: { 'accept-language': 'en' } }
       );
-      console.log(response);
       setSuggestions(response.data);
       setShowSuggestions(true);
     } catch (error) {
