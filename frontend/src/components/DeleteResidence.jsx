@@ -8,7 +8,7 @@ const DeleteResidence = () => {
   const { id } = useParams();
   useEffect(() => {
     axios
-      .delete("http://localhost:3001/residence/residence/" + id)
+      .delete("https://real-estate-server-88bm.onrender.com/residence/residence/" + id)
       .then((res) => {
         if (res.data.deleted) {
           navigate("/residences");

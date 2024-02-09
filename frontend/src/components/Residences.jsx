@@ -33,7 +33,7 @@ const [deleteId, setDeleteId] = useState()
 
   const fetchData = async () => {
     axios
-      .get("http://localhost:3001/residences", { withCredentials: true })
+      .get("https://real-estate-server-88bm.onrender.com/residences", { withCredentials: true })
       .then(({ data }) => {
         setResidences(data);
       });

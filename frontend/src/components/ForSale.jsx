@@ -11,14 +11,14 @@ const ForSale = () => {
   }, []);
 
   const fetchData = async () => {
-    const res = await axios.get("http://localhost:3001/residences/forSale", {
+    const res = await axios.get("https://real-estate-server-88bm.onrender.com/residences/forSale", {
       withCredentials: true,
     });
     setResForSale(res.data);
   };
 
   const deleteResidence = async (id) => {
-    await axios.delete(`http://localhost:3001/residences/${id}`, {
+    await axios.delete(`https://real-estate-server-88bm.onrender.com/residences/${id}`, {
       withCredentials: true,
     });
     fetchData();

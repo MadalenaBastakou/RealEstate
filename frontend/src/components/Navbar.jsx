@@ -12,7 +12,7 @@ const Navbar = () => {
   const [showDropdown, setShowDropdown] = useState(false);
 
   const handleLogout = async () => {
-    await axios.get("http://localhost:3001/logout");
+    await axios.get("https://real-estate-server-88bm.onrender.com/logout");
     removeCookie("token", { path: "/" });
    
   };

@@ -86,7 +86,7 @@ function AddResidence() {
 
     const startTime = performance.now(); // Record start time
     try {
-      const res = await axios.post("http://localhost:3001/upload", formData, {
+      const res = await axios.post("https://real-estate-server-88bm.onrender.com/upload", formData, {
         withCredentials: true,
       });
       setResidence({ ...residence, image: res.data.path });

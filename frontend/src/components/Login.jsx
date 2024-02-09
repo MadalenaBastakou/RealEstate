@@ -30,7 +30,7 @@ function Login() {
   // request with the user's data sent to the backed
   const handleSubmit = async () => {
     try {
-      const res = await axios.post("http://localhost:3001/login", user, {
+      const res = await axios.post("https://real-estate-server-88bm.onrender.com/login", user, {
         withCredentials: true,
       });
       if (res.status === 200) {

@@ -25,7 +25,7 @@ const AllResidences = () => {
   }, []);
   // get all the residences of all the users
   const fetchData = async () => {
-    axios.get("http://localhost:3001/residences/all").then(({ data }) => {
+    axios.get("https://real-estate-server-88bm.onrender.com/residences/all").then(({ data }) => {
       setResidences(data);
     });
   };

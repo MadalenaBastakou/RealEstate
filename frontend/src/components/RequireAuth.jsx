@@ -9,7 +9,7 @@ function RequireAuth(props) {
 
   const checkAuth = async () => {
     axios
-      .get("http://localhost:3001/verify", { withCredentials: true })
+      .get("https://real-estate-server-88bm.onrender.com/verify", { withCredentials: true })
       .then(({data}) => {
         if (data.message === "User is not valid") {
           setLoggedIn(false);

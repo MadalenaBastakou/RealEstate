@@ -42,7 +42,7 @@ const EditResidence = ({
   // get all the selected residence data before the user starts making any kind of change
   useEffect(() => {
     axios
-      .get(`http://localhost:3001/residences/${residenceToUpdate._id}`, {
+      .get(`https://real-estate-server-88bm.onrender.com/residences/${residenceToUpdate._id}`, {
         withCredentials: true,
       })
       .then((res) => {
@@ -65,7 +65,7 @@ const EditResidence = ({
 
     const startTime = performance.now(); // Record start time
     try {
-      const res = await axios.post("http://localhost:3001/upload", formData, {
+      const res = await axios.post("https://real-estate-server-88bm.onrender.com/upload", formData, {
         withCredentials: true,
       });
       setImageUrl(res.data.path);
@@ -84,7 +84,7 @@ const EditResidence = ({
     e.preventDefault();
     axios
       .put(
-        `http://localhost:3001/residences/${residenceToUpdate._id}`,
+        `https://real-estate-server-88bm.onrender.com/residences/${residenceToUpdate._id}`,
         {
           name: name,
           price: price,

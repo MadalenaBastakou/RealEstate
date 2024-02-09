@@ -7,7 +7,7 @@ const Logout = () => {
   // logout the user, request to the backend
   useEffect(() => {
     const logout = async () => {
-      const res = await axios.get("http://localhost:3001/logout")
+      const res = await axios.get("https://real-estate-server-88bm.onrender.com/logout")
 
       // if(res.status === 200) {
       //   navigate('/login')
